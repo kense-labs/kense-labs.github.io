@@ -52,10 +52,36 @@ jobs:
           test -f site/kui/index.html
           test -f site/index.html
           echo 'changed=true' >> "$GITHUB_OUTPUT"
+
+      # Static /krun docs (not KUI router). Sourced from branch krun-docs on this repo.
+      - if: steps.release.outputs.changed == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: krun-docs
+          path: krun-docs
+          fetch-depth: 1
+        continue-on-error: true
+
+      - if: steps.release.outputs.changed == 'true'
+        name: Overlay /krun
+        run: |
+          set -euo pipefail
+          if [ -f krun-docs/index.html ] || [ -d krun-docs/runtime ]; then
+            rm -rf site/krun
+            mkdir -p site/krun
+            # branch tip is the docs root (no nested .git)
+            tar -C krun-docs -cf - --exclude .git . | tar -C site/krun -xf -
+            test -f site/krun/index.html
+            echo 'Overlayed site/krun from krun-docs branch'
+          else
+            echo 'No krun-docs branch content yet; publishing KUI site without /krun'
+          fi
+
       - if: steps.release.outputs.changed == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: site
+
   deploy:
     needs: release
     if: needs.release.outputs.changed == 'true'

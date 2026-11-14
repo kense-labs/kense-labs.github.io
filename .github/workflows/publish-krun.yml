@@ -1,0 +1,70 @@
+# Republish org site with /krun docs refreshed (does not use KUI app router).
+name: Publish /krun docs
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [publish-krun-docs]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kense-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch current KUI site release
+        env:
+          CHANNEL: https://kense-labs.github.io/KUI
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 3 "$CHANNEL/release.json" -o release.json
+          sha=$(jq -er '.revision | select(test("^[0-9a-f]{40}$"))' release.json)
+          digest=$(jq -er '.sha256 | select(test("^[0-9a-f]{64}$"))' release.json)
+          curl -fsSL --retry 3 "$CHANNEL/releases/$sha/site.tar.gz" -o site.tar.gz
+          echo "$digest  site.tar.gz" | sha256sum --check
+          mkdir site
+          python3 - <<'PY'
+          import tarfile
+          with tarfile.open("site.tar.gz") as archive:
+              if any(not (f.isfile() or f.isdir()) for f in archive):
+                  raise ValueError("unexpected member in site release")
+              archive.extractall("site", filter="data")
+          PY
+          test -f site/index.html
+          test -f site/kui/index.html
+
+      - uses: actions/checkout@v4
+        with:
+          ref: krun-docs
+          path: krun-docs
+          fetch-depth: 1
+
+      - name: Overlay /krun
+        run: |
+          set -euo pipefail
+          test -f krun-docs/index.html
+          rm -rf site/krun
+          mkdir -p site/krun
+          tar -C krun-docs -cf - --exclude .git . | tar -C site/krun -xf -
+          test -f site/krun/index.html
+          ls site/krun | head
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://kense-labs.github.io/krun/
+    steps:
+      - uses: actions/deploy-pages@v4
