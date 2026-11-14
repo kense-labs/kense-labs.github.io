@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>发版检查 · KRun 1.0.0</title>
+  <meta name="description" content="可见范围、版本钉扎、出门清单。" />
+  <meta name="doc-version" content="1.0.0" />
+  <meta name="doc-product" content="krun" />
+  <meta name="doc-audience" content="web-main" />
+  
+  <link rel="icon" href="../../../assets/kense-icon.png" />
+  <link rel="stylesheet" href="../../../assets/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+  <header class="docs-header">
+    <a class="docs-brand" href="../../../index.html">
+      <img class="brand-logo" src="../../../assets/kense-mark.png" width="28" height="28" alt="Kense" />
+      <span>Kense</span>
+      <span class="header-divider">/</span>
+      <span class="docs-wordmark">KRun</span>
+    </a>
+    <nav class="header-links" aria-label="站点">
+      <a href="../index/index.html">文档</a>
+      <a class="download-link" href="../../../../INSTALL.md">对接</a>
+    </nav>
+  </header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" aria-label="章节">
+      <div class="sidebar-heading">
+        <img class="sidebar-logo" src="../../../assets/kense-mark.png" width="22" height="22" alt="" />
+        <div>
+          <strong>KRun</strong>
+          <span>隔离运行时</span>
+        </div>
+      </div>
+      <div class="docs-switchers"><details class="docs-switcher">
+  <summary><span class="switcher-label">Version</span><span class="switcher-current">1.0.0</span><span class="switcher-chevron" aria-hidden="true"></span></summary>
+  <div class="switcher-menu"><a href="../../1.0.0/operations/index.html" aria-current="page">1.0.0 <small>默认</small></a></div>
+</details></div>
+      <nav class="chapter-nav" aria-label="文档目录">
+        <p class="nav-label">v1.0.0</p>
+        <div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="#" aria-current="page"><span class="nav-number">07</span>发版检查</a></div>
+      </nav>
+      <div class="docs-version"><span class="version-dot"></span> v1.0.0 · 默认</div>
+    </aside>
+    <main id="content">
+      <details class="mobile-navigation">
+        <summary>章节导航</summary>
+        <nav><div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="#" aria-current="page"><span class="nav-number">07</span>发版检查</a></div></nav>
+      </details>
+      <nav class="breadcrumb" aria-label="面包屑">
+        <a href="../../../index.html">文档</a><span>/</span>
+        <a href="../../index.html">KRun</a><span>/</span>
+        <span>v1.0.0</span><span>/</span>
+        <span>发版检查</span>
+      </nav>
+      <header class="article-heading">
+        <p class="eyebrow">发版检查</p>
+        <h1>发版检查</h1>
+        <p class="article-description">可见范围、版本钉扎、出门清单。</p>
+        <div class="article-meta">
+          <span>更新 2026-11-14</span>
+          <span>文档版本 1.0.0</span>
+          <span>默认</span>
+        </div>
+      </header>
+      <article class="prose">
+<p>读者：Web 发版与 CI。还没跑通？先 <a href="../index/index.html">1 分钟对接</a>。接线见 <a href="../integration/index.html">接入 Main</a>。</p>
+<h2 id="可见范围">可见范围</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>层</th><th>可见</th><th>不可见</th></tr></thead><tbody>
+<tr><td>界面</td><td>状态字段、业务数据</td><td>环境变量、端点、密钥、控制方法名</td></tr>
+<tr><td>Web Main</td><td>放置、会话端点、合同子集、能力准备结果</td><td>把上述原文转交界面</td></tr>
+<tr><td>业务进程</td><td>产品会话、工具名、稳定工作区路径</td><td>控制面、宿主绝对路径</td></tr>
+<tr><td>Runtime</td><td>隔离环境与中继</td><td>产品业务语义</td></tr>
+</tbody></table></div>
+<p>强制隔离下缺会话端点必须启动失败，不得静默回退本机旁路。</p>
+<p><code>vm_resources/*</code>、<code>guest_shares/*</code>、<code>core_impl/*</code> 只给 Main，不进界面。</p>
+<h2 id="版本钉扎">版本钉扎</h2>
+<ol>
+<li>合同与包用 <code>.vN</code>；破坏性变更升主版本。  </li>
+<li>CI 锁 stamp 与合同哈希。  </li>
+<li>新可选能力默认失败关闭，或只拒单个工具。  </li>
+<li>文档按 <code>docs/runtime/&lt;version&gt;/</code> 分版；当前默认 <strong>1.0.0</strong>。</li>
+</ol>
+<figure class="verification-figure">
+  <div class="verification-row">
+    <span class="version">1.0.0</span>
+    <div><strong>文档 · 包 · 合同</strong><span>同包钉扎</span></div>
+    <span class="result-pill">required</span>
+  </div>
+  <div class="version-change">新增文档版本时新建目录，不覆盖旧版。</div>
+</figure>
+<h2 id="出门清单">出门清单</h2>
+<ol>
+<li>目标平台二进制可执行，并与 <code>MANIFEST.json</code>（若有）一致。  </li>
+<li><code>docs/index.html</code> 可离线打开。  </li>
+<li>强制隔离下移除会话端点，启动必须失败。  </li>
+<li>无 Runtime 时，界面状态为不可用。  </li>
+<li>若启用能力：已开放的可用，未开放的被拒。  </li>
+<li>若启用共享：按 <code>share_id</code> 增删成功；越权被拒。  </li>
+<li>Main 控制面冒烟通过（如 <code>doctor</code>、必要会话路径）。</li>
+</ol>
+<h2 id="相关">相关</h2>
+<ul>
+<li><a href="../integration/index.html">接入 Main</a>  </li>
+<li><a href="../recipes/index.html">调用配方</a>  </li>
+<li><a href="../api/index.html">控制面 API</a>  </li>
+<li><a href="../../../../contracts/"><code>contracts/</code></a>  </li>
+</ul>
+      </article>
+      <nav class="page-navigation" aria-label="相邻章节">
+    <a href="../api/index.html"><span>上一篇</span><strong>控制面 API</strong></a>
+    <a href="../../../index.html"><span>完成</span><strong>返回入口</strong></a>
+  </nav>
+      <footer class="docs-footer">
+        <span>Kense KRun · v1.0.0</span>
+        <span>文档</span>
+      </footer>
+    </main>
+    <aside class="docs-toc" aria-label="本页目录">
+      <div class="toc-content">
+        <p class="nav-label">本页</p>
+        <nav><a href="#可见范围">可见范围</a>
+<a href="#版本钉扎">版本钉扎</a>
+<a href="#出门清单">出门清单</a>
+<a href="#相关">相关</a></nav>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

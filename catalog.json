@@ -1,0 +1,103 @@
+{
+  "schema": "kense.krun.docs.catalog.v1",
+  "projects": [
+    {
+      "id": "runtime",
+      "title": "KRun",
+      "label": "隔离运行时",
+      "description": "Web Main 对接 KRun（@kense/krun）。在线：https://kense-labs.github.io/krun/",
+      "defaultVersion": "1.0.0",
+      "audience": "web-main",
+      "informationArchitecture": {
+        "model": "diataxis",
+        "order": [
+          "how-to",
+          "explanation",
+          "migration",
+          "reference",
+          "operations"
+        ]
+      },
+      "versions": [
+        {
+          "id": "1.0.0",
+          "label": "1.0.0",
+          "status": "current",
+          "released": "2026-11-14",
+          "pages": [
+            {
+              "slug": "",
+              "file": "index",
+              "label": "1 分钟对接",
+              "title": "1 分钟对接",
+              "description": "装包、起控制面、doctor 通——先跑通再展开",
+              "role": "how-to",
+              "group": "start",
+              "groupLabel": "入门"
+            },
+            {
+              "slug": "integration/",
+              "file": "integration",
+              "label": "接入 Main",
+              "title": "接入 Main",
+              "description": "装包、起控制面、放置、跑通会话",
+              "role": "how-to",
+              "group": "start",
+              "groupLabel": "入门"
+            },
+            {
+              "slug": "boundaries/",
+              "file": "boundaries",
+              "label": "边界与分工",
+              "title": "边界与分工",
+              "description": "谁调 Runtime、谁不调、术语从哪来（跑通后再读）",
+              "role": "explanation",
+              "group": "start",
+              "groupLabel": "入门"
+            },
+            {
+              "slug": "dock-delta/",
+              "file": "dock-delta",
+              "label": "迁出本机旁路",
+              "title": "迁出本机旁路",
+              "description": "从宿主直跑切到隔离运行时",
+              "role": "migration",
+              "group": "start",
+              "groupLabel": "入门"
+            },
+            {
+              "slug": "recipes/",
+              "file": "recipes",
+              "label": "调用配方",
+              "title": "调用配方",
+              "description": "按任务写好的 Main 调用路径，附可运行片段",
+              "role": "how-to",
+              "group": "build",
+              "groupLabel": "实现"
+            },
+            {
+              "slug": "api/",
+              "file": "api",
+              "label": "控制面 API",
+              "title": "控制面 API",
+              "description": "方法、参数、错误码与状态面",
+              "role": "reference",
+              "group": "build",
+              "groupLabel": "实现"
+            },
+            {
+              "slug": "operations/",
+              "file": "operations",
+              "label": "发版检查",
+              "title": "发版检查",
+              "description": "可见范围、版本钉扎、出门清单",
+              "role": "operations",
+              "group": "ship",
+              "groupLabel": "发版"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

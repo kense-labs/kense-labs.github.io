@@ -1,0 +1,18 @@
+--- a/main/placement.ts
++++ b/main/placement.ts
+@@
+-async start(options) {
+-  const bundle = await verifyBundle(/* … */);
+-  return this.startLocal(options, bundle);
+-}
++async start(options) {
++  const bundle = await verifyBundle(/* … */);
++  const placement = resolvePlacement();
++
++  if (placement.mode === 'isolated') {
++    requireSessionEndpoints(placement);
++    return this.startIsolated(options, bundle, placement);
++  }
++
++  return this.startLocal(options, bundle);
++}

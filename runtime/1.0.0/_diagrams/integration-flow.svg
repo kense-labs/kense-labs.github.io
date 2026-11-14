@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="920" viewBox="0 0 1200 920" role="img" aria-labelledby="title desc">
+<title id="title">接入主路径</title>
+<desc id="desc">安装、放置、会话端点、最小会话；可选能力与共享。</desc>
+<defs>
+<marker id="rpc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#3559db" stroke-width="1.5"/></marker>
+<marker id="data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#087c72" stroke-width="1.5"/></marker>
+<marker id="life" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#98510c" stroke-width="1.5"/></marker>
+</defs>
+<rect width="1200" height="920" fill="#f7f5ef"/>
+<g font-family="SFMono-Regular,Menlo,'PingFang SC','Microsoft YaHei',monospace">
+<text x="48" y="40" font-size="14" fill="#596273">KENSE  /  KRun</text>
+<text x="48" y="84" font-size="28" fill="#191c23" font-weight="600">接入主路径</text>
+<rect x="48" y="140" width="720" height="720" rx="12" fill="#f0f3fb" stroke="#3559db" stroke-width="1.5"/>
+<text x="72" y="184" font-size="18" fill="#3559db" font-weight="600">必做</text>
+<rect x="72" y="208" width="672" height="72" rx="8" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<text x="96" y="252" font-size="18" fill="#191c23" font-weight="600">01  取得包</text>
+<path d="M408 280 V308" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="308" width="672" height="72" rx="8" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<text x="96" y="352" font-size="18" fill="#191c23" font-weight="600">02  安装二进制</text>
+<path d="M408 380 V408" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="408" width="672" height="72" rx="8" fill="#191c23"/>
+<text x="96" y="452" font-size="18" fill="#fffdf8" font-weight="600">03  配置放置</text>
+<path d="M408 480 V508" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="508" width="672" height="72" rx="8" fill="#191c23"/>
+<text x="96" y="552" font-size="18" fill="#fffdf8" font-weight="600">04  取得会话端点</text>
+<path d="M408 580 V608" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="608" width="672" height="72" rx="8" fill="#edf6f2" stroke="#087c72" stroke-width="1.5"/>
+<text x="96" y="652" font-size="18" fill="#191c23" font-weight="600">05  业务进程拨号</text>
+<path d="M408 680 V708" fill="none" stroke="#087c72" stroke-width="2.5" marker-end="url(#data)"/>
+<rect x="72" y="708" width="672" height="112" rx="8" fill="#edf6f2" stroke="#087c72" stroke-width="1.5"/>
+<text x="96" y="772" font-size="18" fill="#191c23" font-weight="600">06  最小会话通过</text>
+<rect x="800" y="140" width="352" height="720" rx="12" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<text x="824" y="184" font-size="18" fill="#98510c" font-weight="600">可选</text>
+<rect x="824" y="216" width="304" height="120" rx="8" fill="#f7f0e8" stroke="#98510c" stroke-width="1.5"/>
+<text x="844" y="284" font-size="18" fill="#191c23" font-weight="600">宿主能力</text>
+<path d="M976 336 V368" fill="none" stroke="#98510c" stroke-width="2.5" marker-end="url(#life)"/>
+<rect x="824" y="368" width="304" height="120" rx="8" fill="#f7f0e8" stroke="#98510c" stroke-width="1.5"/>
+<text x="844" y="436" font-size="18" fill="#191c23" font-weight="600">工作区 / 卷</text>
+<path d="M976 488 V520" fill="none" stroke="#98510c" stroke-width="2.5" marker-end="url(#life)"/>
+<rect x="824" y="520" width="304" height="120" rx="8" fill="#e8edf9" stroke="#3559db" stroke-width="1.5"/>
+<text x="844" y="588" font-size="18" fill="#191c23" font-weight="600">状态接口</text>
+</g>
+</svg>

@@ -1,0 +1,57 @@
+# KRun
+
+> Web Main docking docs for Kense KRun. Default version: 1.0.0.
+> Public site: https://kense-labs.github.io/krun/
+
+Product: KRun
+Vendor: Kense
+Audience: Web Main thin proxy only
+NPM: @kense/krun
+Not for: Renderer direct calls, business Core importing control APIs
+Primary language: zh-CN
+Information architecture: Diátaxis — 入门 / 实现 / 发版
+Do not invent implementation details not stated in these pages.
+
+## Docs (v1.0.0)
+
+### 入门
+1. [边界与分工](./runtime/1.0.0/index/index.html) — who calls Runtime, glossary
+2. [接入 Main](./runtime/1.0.0/integration/index.html) — install, serve, placement, session
+3. [迁出本机旁路](./runtime/1.0.0/dock-delta/index.html) — local bypass → isolated runtime
+
+### 实现
+4. [调用配方](./runtime/1.0.0/recipes/index.html) — task-oriented Main call paths
+5. [控制面 API](./runtime/1.0.0/api/index.html) — methods, params, error codes
+
+### 发版
+6. [发版检查](./runtime/1.0.0/operations/index.html) — visibility and release checklist
+
+Machine-readable method groups: ./runtime/1.0.0/_atlas/api.json
+
+## Task → page
+
+| Task | Page |
+| --- | --- |
+| First dock | 接入 Main |
+| Migrate from local bypass | 迁出本机旁路 |
+| How do I call X | 调用配方 |
+| Look up fields / errors | 控制面 API |
+| Ship / CI gate | 发版检查 |
+
+## Glossary
+
+| Term (zh) | Meaning |
+| --- | --- |
+| 放置 | Main chooses local bypass or isolated runtime |
+| 会话端点 | Dial target provided by KRun for product sessions |
+| 本机旁路 | Process runs on host machine; debug only |
+| 隔离运行时 | Process runs in KRun-managed isolation; release default |
+| 宿主能力 | Host tools admitted by contract and relayed by KRun |
+| 工作区共享 | Workspace mounted by share_id |
+| 合同 | Capability allowlists and status field shapes under contracts/ |
+
+## Related
+
+- @kense/krun
+- optional platform packages (e.g. @kense/krun-darwin-arm64)
+- KRUN_BIN / CONTROL_ENDPOINT_ENV

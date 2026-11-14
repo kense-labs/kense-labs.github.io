@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+<title id="title">对接变更</title>
+<desc id="desc">本机旁路与隔离运行时对照。</desc>
+<defs>
+<marker id="rpc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#3559db" stroke-width="1.5"/></marker>
+<marker id="data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#087c72" stroke-width="1.5"/></marker>
+</defs>
+<rect width="1200" height="780" fill="#f7f5ef"/>
+<g font-family="SFMono-Regular,Menlo,'PingFang SC','Microsoft YaHei',monospace">
+<text x="48" y="40" font-size="14" fill="#596273">KENSE  /  KRun</text>
+<text x="48" y="84" font-size="28" fill="#191c23" font-weight="600">对接变更</text>
+<rect x="48" y="130" width="1104" height="64" rx="12" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<text x="72" y="170" font-size="18" fill="#191c23" font-weight="600">Main 统一编排</text>
+<path d="M600 194 V226" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="300" y="226" width="600" height="56" rx="12" fill="#f0f3fb" stroke="#3559db" stroke-width="1.5"/>
+<text x="600" y="262" font-size="17" fill="#3559db" text-anchor="middle" font-weight="600">放置</text>
+<path d="M420 282 V316" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<path d="M780 282 V316" fill="none" stroke="#087c72" stroke-width="2.5" marker-end="url(#data)"/>
+<rect x="48" y="316" width="520" height="400" rx="12" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<rect x="48" y="316" width="520" height="48" rx="12" fill="#ececec"/>
+<text x="72" y="348" font-size="16" fill="#596273" font-weight="600">变更前 · 本机旁路</text>
+<rect x="72" y="392" width="472" height="72" rx="8" fill="#191c23"/>
+<text x="92" y="436" font-size="17" fill="#fffdf8" font-weight="600">本机进程</text>
+<path d="M308 464 V492" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="492" width="472" height="72" rx="8" fill="#f0f3fb" stroke="#3559db" stroke-width="1.5"/>
+<text x="92" y="536" font-size="17" fill="#3559db" font-weight="600">产品会话</text>
+<path d="M308 564 V592" fill="none" stroke="#087c72" stroke-width="2.5" marker-end="url(#data)"/>
+<rect x="72" y="592" width="472" height="92" rx="8" fill="#edf6f2" stroke="#087c72" stroke-width="1.5"/>
+<text x="92" y="646" font-size="17" fill="#191c23" font-weight="600">本机会话</text>
+<rect x="632" y="316" width="520" height="400" rx="12" fill="#eef2fc" stroke="#3559db" stroke-width="1.5"/>
+<rect x="632" y="316" width="520" height="48" rx="12" fill="#3559db"/>
+<text x="656" y="348" font-size="16" fill="#fffdf8" font-weight="600">变更后 · 隔离运行时</text>
+<rect x="656" y="392" width="472" height="72" rx="8" fill="#191c23"/>
+<text x="676" y="436" font-size="17" fill="#fffdf8" font-weight="600">Runtime</text>
+<path d="M892 464 V492" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="656" y="492" width="472" height="72" rx="8" fill="#fffdf8" stroke="#3559db" stroke-width="1.5"/>
+<text x="676" y="536" font-size="17" fill="#3559db" font-weight="600">产品会话</text>
+<path d="M892 564 V592" fill="none" stroke="#087c72" stroke-width="2.5" marker-end="url(#data)"/>
+<rect x="656" y="592" width="472" height="92" rx="8" fill="#edf6f2" stroke="#087c72" stroke-width="1.5"/>
+<text x="676" y="646" font-size="17" fill="#191c23" font-weight="600">Runtime 会话</text>
+</g>
+</svg>

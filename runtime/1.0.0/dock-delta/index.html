@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>迁出本机旁路 · KRun 1.0.0</title>
+  <meta name="description" content="从宿主直跑切到隔离运行时：哪些不变、放置与拨号怎么变。" />
+  <meta name="doc-version" content="1.0.0" />
+  <meta name="doc-product" content="krun" />
+  <meta name="doc-audience" content="web-main" />
+  
+  <link rel="icon" href="../../../assets/kense-icon.png" />
+  <link rel="stylesheet" href="../../../assets/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+  <header class="docs-header">
+    <a class="docs-brand" href="../../../index.html">
+      <img class="brand-logo" src="../../../assets/kense-mark.png" width="28" height="28" alt="Kense" />
+      <span>Kense</span>
+      <span class="header-divider">/</span>
+      <span class="docs-wordmark">KRun</span>
+    </a>
+    <nav class="header-links" aria-label="站点">
+      <a href="../index/index.html">文档</a>
+      <a class="download-link" href="../../../../INSTALL.md">对接</a>
+    </nav>
+  </header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" aria-label="章节">
+      <div class="sidebar-heading">
+        <img class="sidebar-logo" src="../../../assets/kense-mark.png" width="22" height="22" alt="" />
+        <div>
+          <strong>KRun</strong>
+          <span>隔离运行时</span>
+        </div>
+      </div>
+      <div class="docs-switchers"><details class="docs-switcher">
+  <summary><span class="switcher-label">Version</span><span class="switcher-current">1.0.0</span><span class="switcher-chevron" aria-hidden="true"></span></summary>
+  <div class="switcher-menu"><a href="../../1.0.0/dock-delta/index.html" aria-current="page">1.0.0 <small>默认</small></a></div>
+</details></div>
+      <nav class="chapter-nav" aria-label="文档目录">
+        <p class="nav-label">v1.0.0</p>
+        <div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="#" aria-current="page"><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div>
+      </nav>
+      <div class="docs-version"><span class="version-dot"></span> v1.0.0 · 默认</div>
+    </aside>
+    <main id="content">
+      <details class="mobile-navigation">
+        <summary>章节导航</summary>
+        <nav><div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="#" aria-current="page"><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div></nav>
+      </details>
+      <nav class="breadcrumb" aria-label="面包屑">
+        <a href="../../../index.html">文档</a><span>/</span>
+        <a href="../../index.html">KRun</a><span>/</span>
+        <span>v1.0.0</span><span>/</span>
+        <span>迁出本机旁路</span>
+      </nav>
+      <header class="article-heading">
+        <p class="eyebrow">迁出本机旁路</p>
+        <h1>迁出本机旁路</h1>
+        <p class="article-description">从宿主直跑切到隔离运行时：哪些不变、放置与拨号怎么变。</p>
+        <div class="article-meta">
+          <span>更新 2026-11-14</span>
+          <span>文档版本 1.0.0</span>
+          <span>默认</span>
+        </div>
+      </header>
+      <article class="prose">
+<p>读者：已经用本机旁路接过的 Web Main。还没跑通控制面？先 <a href="../index/index.html">1 分钟对接</a>。还没完整接线时走 <a href="../integration/index.html">接入 Main</a>。</p>
+<h2 id="不变的">不变的</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>项</th><th>说明</th></tr></thead><tbody>
+<tr><td>界面</td><td>仍只吃产品状态与业务数据</td></tr>
+<tr><td>启动入口</td><td>仍由 Main 编排会话</td></tr>
+<tr><td>会话协议</td><td>仍是原来的产品会话格式</td></tr>
+<tr><td>业务进程</td><td>仍用工具名与稳定工作区路径</td></tr>
+</tbody></table></div>
+<figure class="diagram krun-diagram">
+  <div class="diagram-scroll"><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+<title id="title">对接变更</title>
+<desc id="desc">本机旁路与隔离运行时对照。</desc>
+<defs>
+<marker id="rpc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#3559db" stroke-width="1.5"/></marker>
+<marker id="data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#087c72" stroke-width="1.5"/></marker>
+</defs>
+<rect width="1200" height="780" fill="#f7f5ef"/>
+<g font-family="SFMono-Regular,Menlo,'PingFang SC','Microsoft YaHei',monospace">
+<text x="48" y="40" font-size="14" fill="#596273">KENSE  /  KRun</text>
+<text x="48" y="84" font-size="28" fill="#191c23" font-weight="600">对接变更</text>
+<rect x="48" y="130" width="1104" height="64" rx="12" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<text x="72" y="170" font-size="18" fill="#191c23" font-weight="600">Main 统一编排</text>
+<path d="M600 194 V226" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="300" y="226" width="600" height="56" rx="12" fill="#f0f3fb" stroke="#3559db" stroke-width="1.5"/>
+<text x="600" y="262" font-size="17" fill="#3559db" text-anchor="middle" font-weight="600">放置</text>
+<path d="M420 282 V316" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<path d="M780 282 V316" fill="none" stroke="#087c72" stroke-width="2.5" marker-end="url(#data)"/>
+<rect x="48" y="316" width="520" height="400" rx="12" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<rect x="48" y="316" width="520" height="48" rx="12" fill="#ececec"/>
+<text x="72" y="348" font-size="16" fill="#596273" font-weight="600">变更前 · 本机旁路</text>
+<rect x="72" y="392" width="472" height="72" rx="8" fill="#191c23"/>
+<text x="92" y="436" font-size="17" fill="#fffdf8" font-weight="600">本机进程</text>
+<path d="M308 464 V492" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="492" width="472" height="72" rx="8" fill="#f0f3fb" stroke="#3559db" stroke-width="1.5"/>
+<text x="92" y="536" font-size="17" fill="#3559db" font-weight="600">产品会话</text>
+<path d="M308 564 V592" fill="none" stroke="#087c72" stroke-width="2.5" marker-end="url(#data)"/>
+<rect x="72" y="592" width="472" height="92" rx="8" fill="#edf6f2" stroke="#087c72" stroke-width="1.5"/>
+<text x="92" y="646" font-size="17" fill="#191c23" font-weight="600">本机会话</text>
+<rect x="632" y="316" width="520" height="400" rx="12" fill="#eef2fc" stroke="#3559db" stroke-width="1.5"/>
+<rect x="632" y="316" width="520" height="48" rx="12" fill="#3559db"/>
+<text x="656" y="348" font-size="16" fill="#fffdf8" font-weight="600">变更后 · 隔离运行时</text>
+<rect x="656" y="392" width="472" height="72" rx="8" fill="#191c23"/>
+<text x="676" y="436" font-size="17" fill="#fffdf8" font-weight="600">Runtime</text>
+<path d="M892 464 V492" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="656" y="492" width="472" height="72" rx="8" fill="#fffdf8" stroke="#3559db" stroke-width="1.5"/>
+<text x="676" y="536" font-size="17" fill="#3559db" font-weight="600">产品会话</text>
+<path d="M892 564 V592" fill="none" stroke="#087c72" stroke-width="2.5" marker-end="url(#data)"/>
+<rect x="656" y="592" width="472" height="92" rx="8" fill="#edf6f2" stroke="#087c72" stroke-width="1.5"/>
+<text x="676" y="646" font-size="17" fill="#191c23" font-weight="600">Runtime 会话</text>
+</g>
+</svg></div>
+  <figcaption>
+    <span class="figure-label">对接变更</span>
+  </figcaption>
+</figure>
+<h2 id="放置怎么变">放置怎么变</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>项</th><th>变更前</th><th>变更后</th></tr></thead><tbody>
+<tr><td>决策</td><td>默认本机旁路</td><td>显式选旁路或隔离</td></tr>
+<tr><td>缺端点</td><td>不适用</td><td>隔离模式下启动失败，不回退本机</td></tr>
+<tr><td>发版默认</td><td>本机旁路</td><td>隔离运行时</td></tr>
+</tbody></table></div>
+<p>下方是 Main 放置逻辑的 unified diff，再后面是变更前后对照。</p>
+<figure class="diff-compare" aria-label="放置决策">
+  <figcaption class="diff-compare-head">
+    <strong>放置决策</strong>
+    <span class="code-path">main/placement.ts</span>
+  </figcaption>
+  <div class="diff-unified"><div class="code-block"><div class="code-toolbar"><span class="code-path">main/placement.ts</span><span class="code-meta">diff</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#B31D28">--- a/main/placement.ts</span></span>
+<span class="line"><span style="color:#22863A">+++ b/main/placement.ts</span></span>
+<span class="line"><span style="color:#24292E">@@</span></span>
+<span class="line"><span style="color:#B31D28">-async start(options) {</span></span>
+<span class="line"><span style="color:#B31D28">-  const bundle = await verifyBundle(/* … */);</span></span>
+<span class="line"><span style="color:#B31D28">-  return this.startLocal(options, bundle);</span></span>
+<span class="line"><span style="color:#B31D28">-}</span></span>
+<span class="line"><span style="color:#22863A">+async start(options) {</span></span>
+<span class="line"><span style="color:#22863A">+  const bundle = await verifyBundle(/* … */);</span></span>
+<span class="line"><span style="color:#22863A">+  const placement = resolvePlacement();</span></span>
+<span class="line"><span style="color:#22863A">+</span></span>
+<span class="line"><span style="color:#22863A">+  if (placement.mode === 'isolated') {</span></span>
+<span class="line"><span style="color:#22863A">+    requireSessionEndpoints(placement);</span></span>
+<span class="line"><span style="color:#22863A">+    return this.startIsolated(options, bundle, placement);</span></span>
+<span class="line"><span style="color:#22863A">+  }</span></span>
+<span class="line"><span style="color:#22863A">+</span></span>
+<span class="line"><span style="color:#22863A">+  return this.startLocal(options, bundle);</span></span>
+<span class="line"><span style="color:#22863A">+}</span></span></code></pre></div></div>
+  <div class="diff-compare-grid" role="group" aria-label="变更前与变更后">
+    <div class="diff-pane diff-pane--before">
+      <div class="code-block"><div class="code-toolbar"><span class="code-path">main/placement.ts</span><span class="code-meta">变更前</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#6A737D">// main/placement.ts — before</span></span>
+<span class="line"><span style="color:#24292E">async </span><span style="color:#6F42C1">start</span><span style="color:#24292E">(options) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> bundle</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> verifyBundle</span><span style="color:#24292E">(</span><span style="color:#6A737D">/* … */</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#005CC5"> this</span><span style="color:#24292E">.</span><span style="color:#6F42C1">startLocal</span><span style="color:#24292E">(options, bundle);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+    </div>
+    <div class="diff-pane diff-pane--after">
+      <div class="code-block"><div class="code-toolbar"><span class="code-path">main/placement.ts</span><span class="code-meta">变更后</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#6A737D">// main/placement.ts — after</span></span>
+<span class="line"><span style="color:#24292E">async </span><span style="color:#6F42C1">start</span><span style="color:#24292E">(options) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> bundle</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> verifyBundle</span><span style="color:#24292E">(</span><span style="color:#6A737D">/* … */</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> placement</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> resolvePlacement</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (placement.mode </span><span style="color:#D73A49">===</span><span style="color:#032F62"> 'isolated'</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#6F42C1">    requireSessionEndpoints</span><span style="color:#24292E">(placement);</span></span>
+<span class="line"><span style="color:#D73A49">    return</span><span style="color:#005CC5"> this</span><span style="color:#24292E">.</span><span style="color:#6F42C1">startIsolated</span><span style="color:#24292E">(options, bundle, placement);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#005CC5"> this</span><span style="color:#24292E">.</span><span style="color:#6F42C1">startLocal</span><span style="color:#24292E">(options, bundle);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+    </div>
+  </div>
+</figure>
+<h2 id="会话拨号怎么变">会话拨号怎么变</h2>
+<p>变更前：Main 拉起本机进程并建会话。  </p>
+<p>变更后：Main 连 Runtime 给出的会话端点；会话协议不变。</p>
+<figure class="diff-compare" aria-label="会话拨号">
+  <figcaption class="diff-compare-head">
+    <strong>会话拨号</strong>
+    <span class="code-path">main/session.ts</span>
+  </figcaption>
+  <div class="diff-unified"><div class="code-block"><div class="code-toolbar"><span class="code-path">main/session.ts</span><span class="code-meta">diff</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#B31D28">--- a/main/session.ts</span></span>
+<span class="line"><span style="color:#22863A">+++ b/main/session.ts</span></span>
+<span class="line"><span style="color:#24292E">@@</span></span>
+<span class="line"><span style="color:#B31D28">-const local = await startLocalProcesses(bundle);</span></span>
+<span class="line"><span style="color:#B31D28">-session = openSession(local);</span></span>
+<span class="line"><span style="color:#22863A">+requireSessionEndpoints(placement);</span></span>
+<span class="line"><span style="color:#22863A">+const endpoints = await connectSessionEndpoints(placement);</span></span>
+<span class="line"><span style="color:#22863A">+session = openSession(endpoints.primary);</span></span></code></pre></div></div>
+  <div class="diff-compare-grid" role="group" aria-label="变更前与变更后">
+    <div class="diff-pane diff-pane--before">
+      <div class="code-block"><div class="code-toolbar"><span class="code-path">main/session.ts</span><span class="code-meta">变更前</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#6A737D">// main/session.ts — before</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> local</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> startLocalProcesses</span><span style="color:#24292E">(bundle);</span></span>
+<span class="line"><span style="color:#24292E">session </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> openSession</span><span style="color:#24292E">(local);</span></span></code></pre></div>
+    </div>
+    <div class="diff-pane diff-pane--after">
+      <div class="code-block"><div class="code-toolbar"><span class="code-path">main/session.ts</span><span class="code-meta">变更后</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#6A737D">// main/session.ts — after</span></span>
+<span class="line"><span style="color:#6F42C1">requireSessionEndpoints</span><span style="color:#24292E">(placement);</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> endpoints</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> connectSessionEndpoints</span><span style="color:#24292E">(placement);</span></span>
+<span class="line"><span style="color:#24292E">session </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> openSession</span><span style="color:#24292E">(endpoints.primary);</span></span></code></pre></div>
+    </div>
+  </div>
+</figure>
+<h2 id="可选能力">可选能力</h2>
+<p>隔离路径上可由 Main 按合同启用：宿主能力（开会话前准备工具名）、工作区共享（<code>share_id</code>）、界面只读状态。方法见 <a href="../api/index.html">控制面 API</a>；写法见 <a href="../recipes/index.html">调用配方</a>。</p>
+<h2 id="迁完再查">迁完再查</h2>
+<ol>
+<li>发版放置为默认隔离或强制隔离。  </li>
+<li>缺会话端点时启动失败，无静默回退。  </li>
+<li>最小会话与断线行为符合预期。  </li>
+<li>界面仍只读产品状态字段。  </li>
+<li>不要把旁路时代的宿主路径硬塞进 guest 参数。</li>
+</ol>
+<h2 id="相关">相关</h2>
+<ul>
+<li><a href="../integration/index.html">接入 Main</a>  </li>
+<li><a href="../recipes/index.html">调用配方</a>  </li>
+<li><a href="../api/index.html">控制面 API</a>  </li>
+<li><a href="../operations/index.html">发版检查</a>  </li>
+</ul>
+      </article>
+      <nav class="page-navigation" aria-label="相邻章节">
+    <a href="../boundaries/index.html"><span>上一篇</span><strong>边界与分工</strong></a>
+    <a href="../recipes/index.html"><span>下一篇</span><strong>调用配方</strong></a>
+  </nav>
+      <footer class="docs-footer">
+        <span>Kense KRun · v1.0.0</span>
+        <span>文档</span>
+      </footer>
+    </main>
+    <aside class="docs-toc" aria-label="本页目录">
+      <div class="toc-content">
+        <p class="nav-label">本页</p>
+        <nav><a href="#不变的">不变的</a>
+<a href="#放置怎么变">放置怎么变</a>
+<a href="#会话拨号怎么变">会话拨号怎么变</a>
+<a href="#可选能力">可选能力</a>
+<a href="#迁完再查">迁完再查</a>
+<a href="#相关">相关</a></nav>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

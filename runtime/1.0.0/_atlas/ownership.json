@@ -1,0 +1,10 @@
+{
+  "id": "ownership",
+  "title": "职责划分",
+  "rows": [
+    { "role": "界面", "owns": ["status", "business_dto"], "must_not": ["endpoints", "secrets"] },
+    { "role": "Main", "owns": ["placement", "session_endpoints", "status_mapping"], "must_not": ["leak_to_ui"] },
+    { "role": "业务进程", "owns": ["turn", "tool_names", "stable_paths"], "must_not": ["runtime_sdk", "host_absolute_paths"] },
+    { "role": "Runtime", "owns": ["isolation", "session_forwarding", "optional_relay"], "must_not": ["product_semantics"] }
+  ]
+}

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>接入 Main · KRun 1.0.0</title>
+  <meta name="description" content="装包、起控制面、放置、跑通会话。" />
+  <meta name="doc-version" content="1.0.0" />
+  <meta name="doc-product" content="krun" />
+  <meta name="doc-audience" content="web-main" />
+  
+  <link rel="icon" href="../../../assets/kense-icon.png" />
+  <link rel="stylesheet" href="../../../assets/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+  <header class="docs-header">
+    <a class="docs-brand" href="../../../index.html">
+      <img class="brand-logo" src="../../../assets/kense-mark.png" width="28" height="28" alt="Kense" />
+      <span>Kense</span>
+      <span class="header-divider">/</span>
+      <span class="docs-wordmark">KRun</span>
+    </a>
+    <nav class="header-links" aria-label="站点">
+      <a href="../index/index.html">文档</a>
+      <a class="download-link" href="../../../../INSTALL.md">对接</a>
+    </nav>
+  </header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" aria-label="章节">
+      <div class="sidebar-heading">
+        <img class="sidebar-logo" src="../../../assets/kense-mark.png" width="22" height="22" alt="" />
+        <div>
+          <strong>KRun</strong>
+          <span>隔离运行时</span>
+        </div>
+      </div>
+      <div class="docs-switchers"><details class="docs-switcher">
+  <summary><span class="switcher-label">Version</span><span class="switcher-current">1.0.0</span><span class="switcher-chevron" aria-hidden="true"></span></summary>
+  <div class="switcher-menu"><a href="../../1.0.0/integration/index.html" aria-current="page">1.0.0 <small>默认</small></a></div>
+</details></div>
+      <nav class="chapter-nav" aria-label="文档目录">
+        <p class="nav-label">v1.0.0</p>
+        <div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="#" aria-current="page"><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div>
+      </nav>
+      <div class="docs-version"><span class="version-dot"></span> v1.0.0 · 默认</div>
+    </aside>
+    <main id="content">
+      <details class="mobile-navigation">
+        <summary>章节导航</summary>
+        <nav><div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="#" aria-current="page"><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div></nav>
+      </details>
+      <nav class="breadcrumb" aria-label="面包屑">
+        <a href="../../../index.html">文档</a><span>/</span>
+        <a href="../../index.html">KRun</a><span>/</span>
+        <span>v1.0.0</span><span>/</span>
+        <span>接入 Main</span>
+      </nav>
+      <header class="article-heading">
+        <p class="eyebrow">接入 MAIN</p>
+        <h1>接入 Main</h1>
+        <p class="article-description">装包、起控制面、放置、跑通会话。</p>
+        <div class="article-meta">
+          <span>更新 2026-11-14</span>
+          <span>文档版本 1.0.0</span>
+          <span>默认</span>
+        </div>
+      </header>
+      <article class="prose">
+<p>读者：能改 Main 启动配置与薄代理的人。还没跑通过？先花一分钟完成 <a href="../index/index.html">1 分钟对接</a>。概念与分层见 <a href="../boundaries/index.html">边界与分工</a>。已有本机旁路时先看 <a href="../dock-delta/index.html">迁出本机旁路</a>。</p>
+<p>目标：在控制面已活的基础上，放置正确、最小会话跑通。宿主能力和共享是可选增强，不是主路径。</p>
+<figure class="diagram krun-diagram">
+  <div class="diagram-scroll"><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="920" viewBox="0 0 1200 920" role="img" aria-labelledby="title desc">
+<title id="title">接入主路径</title>
+<desc id="desc">安装、放置、会话端点、最小会话；可选能力与共享。</desc>
+<defs>
+<marker id="rpc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#3559db" stroke-width="1.5"/></marker>
+<marker id="data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#087c72" stroke-width="1.5"/></marker>
+<marker id="life" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#98510c" stroke-width="1.5"/></marker>
+</defs>
+<rect width="1200" height="920" fill="#f7f5ef"/>
+<g font-family="SFMono-Regular,Menlo,'PingFang SC','Microsoft YaHei',monospace">
+<text x="48" y="40" font-size="14" fill="#596273">KENSE  /  KRun</text>
+<text x="48" y="84" font-size="28" fill="#191c23" font-weight="600">接入主路径</text>
+<rect x="48" y="140" width="720" height="720" rx="12" fill="#f0f3fb" stroke="#3559db" stroke-width="1.5"/>
+<text x="72" y="184" font-size="18" fill="#3559db" font-weight="600">必做</text>
+<rect x="72" y="208" width="672" height="72" rx="8" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<text x="96" y="252" font-size="18" fill="#191c23" font-weight="600">01  取得包</text>
+<path d="M408 280 V308" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="308" width="672" height="72" rx="8" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<text x="96" y="352" font-size="18" fill="#191c23" font-weight="600">02  安装二进制</text>
+<path d="M408 380 V408" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="408" width="672" height="72" rx="8" fill="#191c23"/>
+<text x="96" y="452" font-size="18" fill="#fffdf8" font-weight="600">03  配置放置</text>
+<path d="M408 480 V508" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="508" width="672" height="72" rx="8" fill="#191c23"/>
+<text x="96" y="552" font-size="18" fill="#fffdf8" font-weight="600">04  取得会话端点</text>
+<path d="M408 580 V608" fill="none" stroke="#3559db" stroke-width="2.5" marker-end="url(#rpc)"/>
+<rect x="72" y="608" width="672" height="72" rx="8" fill="#edf6f2" stroke="#087c72" stroke-width="1.5"/>
+<text x="96" y="652" font-size="18" fill="#191c23" font-weight="600">05  业务进程拨号</text>
+<path d="M408 680 V708" fill="none" stroke="#087c72" stroke-width="2.5" marker-end="url(#data)"/>
+<rect x="72" y="708" width="672" height="112" rx="8" fill="#edf6f2" stroke="#087c72" stroke-width="1.5"/>
+<text x="96" y="772" font-size="18" fill="#191c23" font-weight="600">06  最小会话通过</text>
+<rect x="800" y="140" width="352" height="720" rx="12" fill="#fffdf8" stroke="#ccd0d7" stroke-width="1.5"/>
+<text x="824" y="184" font-size="18" fill="#98510c" font-weight="600">可选</text>
+<rect x="824" y="216" width="304" height="120" rx="8" fill="#f7f0e8" stroke="#98510c" stroke-width="1.5"/>
+<text x="844" y="284" font-size="18" fill="#191c23" font-weight="600">宿主能力</text>
+<path d="M976 336 V368" fill="none" stroke="#98510c" stroke-width="2.5" marker-end="url(#life)"/>
+<rect x="824" y="368" width="304" height="120" rx="8" fill="#f7f0e8" stroke="#98510c" stroke-width="1.5"/>
+<text x="844" y="436" font-size="18" fill="#191c23" font-weight="600">工作区 / 卷</text>
+<path d="M976 488 V520" fill="none" stroke="#98510c" stroke-width="2.5" marker-end="url(#life)"/>
+<rect x="824" y="520" width="304" height="120" rx="8" fill="#e8edf9" stroke="#3559db" stroke-width="1.5"/>
+<text x="844" y="588" font-size="18" fill="#191c23" font-weight="600">状态接口</text>
+</g>
+</svg></div>
+  <figcaption>
+    <span class="figure-label">接入主路径</span>
+  </figcaption>
+</figure>
+<h2 id="装包">装包</h2>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">install.sh</span><span class="code-meta">bash</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#6F42C1">pnpm</span><span style="color:#032F62"> add</span><span style="color:#032F62"> @kense/krun</span></span></code></pre></div>
+<div class="table-scroll"><table>
+<thead><tr><th>能力</th><th>用法</th></tr></thead><tbody>
+<tr><td>控制客户端</td><td><code>KrunClient.fromEnv()</code> / <code>client.doctor()</code></td></tr>
+<tr><td>低级 RPC</td><td><code>controlCall(endpoint, method, params)</code></td></tr>
+<tr><td>控制端点</td><td><code>resolveControlEndpoint()</code> / <code>CONTROL_ENDPOINT_ENV</code></td></tr>
+<tr><td>二进制</td><td><code>resolveKrunBinary()</code>；也可设 <code>KRUN_BIN</code></td></tr>
+<tr><td>起控制面</td><td><code>spawnKrunServe({ bin, dataDir, … })</code></td></tr>
+<tr><td>合同</td><td><code>loadContract('…')</code> / <code>listContracts()</code></td></tr>
+</tbody></table></div>
+<h2 id="起控制面">起控制面</h2>
+<ol>
+<li><code>resolveKrunBinary()</code>；找不到就失败，不要静默跳过。  </li>
+<li>为进程准备控制端点（<code>CONTROL_ENDPOINT_ENV</code>）与数据目录。  </li>
+<li><code>spawnKrunServe</code>；<strong>它不会等就绪</strong>——Main 自己轮询 <code>doctor</code>。  </li>
+<li>就绪后再谈会话。</li>
+</ol>
+<p>可复制片段见 <a href="../recipes/index.html">调用配方 · 起控制面</a>。</p>
+<h2 id="放置与会话">放置与会话</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>放置</th><th>含义</th><th>发版</th></tr></thead><tbody>
+<tr><td>本机旁路</td><td>业务进程在宿主直接跑</td><td>仅调试</td></tr>
+<tr><td>隔离运行时</td><td>业务进程在 Runtime 隔离环境</td><td>默认</td></tr>
+</tbody></table></div>
+<p>强制隔离时，缺会话端点必须启动失败，禁止回退本机旁路。</p>
+<p>典型顺序：<code>validate</code>（或已有 pin）→ <code>session.activate</code> → 用返回的会话端点拨产品会话 → 结束后 <code>session.deactivate</code>。字段表在 <a href="../api/index.html">控制面 API</a>；按任务抄代码在 <a href="../recipes/index.html">调用配方</a>。</p>
+<h3 id="验收这一步">验收这一步</h3>
+<ol>
+<li><code>@kense/krun</code> 已装，二进制能解析。  </li>
+<li><code>doctor</code> 通。  </li>
+<li>放置完成且持有会话端点。  </li>
+<li>最小一轮对话通过。  </li>
+<li>断线与失败行为符合产品预期。</li>
+</ol>
+<h2 id="宿主能力可选">宿主能力（可选）</h2>
+<p>主路径过了再开。入口是 <code>host_tools/prepare</code>，再 <code>host_call</code> / <code>host_cancel</code>。细节：<a href="../recipes/index.html">调用配方 · 宿主工具</a>、<a href="../api/index.html">控制面 API</a>。</p>
+<ol>
+<li>按合同准备能力目录。  </li>
+<li>只开放需要的工具名（如 Read、Write、Edit、Grep、Bash）。  </li>
+<li>业务侧只看见工具名。  </li>
+<li>未准备好时拒绝该工具，不拆整轮会话。</li>
+</ol>
+<h2 id="工作区共享可选">工作区共享（可选）</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>概念</th><th>含义</th><th>业务侧可见</th></tr></thead><tbody>
+<tr><td>业务私有卷</td><td>隔离环境内单写持久卷</td><td>稳定路径</td></tr>
+<tr><td>工作区共享</td><td>按 <code>share_id</code> 增删</td><td>含 <code>share_id</code> 的稳定路径</td></tr>
+<tr><td>工具根</td><td>Main 侧文件能力授权根</td><td>不可见</td></tr>
+</tbody></table></div>
+<p>调 <code>guest_shares/*</code>。业务可见数据里不能出现宿主绝对路径。</p>
+<h2 id="状态映射">状态映射</h2>
+<p>Main 把运行状态映射成界面只读字段。控制方法名、端点、密钥不得进界面。形状见合同与 <a href="../api/index.html">控制面 API · 产品状态面</a>。</p>
+<h2 id="对接验收">对接验收</h2>
+<ol>
+<li>只有 Main 依赖 <code>@kense/krun</code>。  </li>
+<li>界面与业务进程不出现 Runtime 私有标识。  </li>
+<li>放置为默认隔离或强制隔离；缺端点启动失败。  </li>
+<li>最小会话通过。  </li>
+<li>若开了能力 / 共享：行为符合合同。  </li>
+<li>无 Runtime 时，界面状态为不可用。</li>
+</ol>
+<p>出门清单：<a href="../operations/index.html">发版检查</a>。</p>
+<h2 id="相关">相关</h2>
+<ul>
+<li><a href="../index/index.html">1 分钟对接</a>  </li>
+<li><a href="../recipes/index.html">调用配方</a>  </li>
+<li><a href="../api/index.html">控制面 API</a>  </li>
+<li><a href="../dock-delta/index.html">迁出本机旁路</a>  </li>
+<li><a href="../boundaries/index.html">边界与分工</a>  </li>
+<li>包说明：仓库 <code>packages/krun/</code>  </li>
+</ul>
+      </article>
+      <nav class="page-navigation" aria-label="相邻章节">
+    <a href="../index/index.html"><span>上一篇</span><strong>1 分钟对接</strong></a>
+    <a href="../boundaries/index.html"><span>下一篇</span><strong>边界与分工</strong></a>
+  </nav>
+      <footer class="docs-footer">
+        <span>Kense KRun · v1.0.0</span>
+        <span>文档</span>
+      </footer>
+    </main>
+    <aside class="docs-toc" aria-label="本页目录">
+      <div class="toc-content">
+        <p class="nav-label">本页</p>
+        <nav><a href="#装包">装包</a>
+<a href="#起控制面">起控制面</a>
+<a href="#放置与会话">放置与会话</a>
+<a href="#验收这一步" style="padding-left:10px">验收这一步</a>
+<a href="#宿主能力可选">宿主能力（可选）</a>
+<a href="#工作区共享可选">工作区共享（可选）</a>
+<a href="#状态映射">状态映射</a>
+<a href="#对接验收">对接验收</a>
+<a href="#相关">相关</a></nav>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

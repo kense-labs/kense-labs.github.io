@@ -1,0 +1,11 @@
+{
+  "id": "architecture",
+  "title": "宿主与 Runtime",
+  "description": "界面、Main、Runtime、业务进程四层边界。",
+  "nodes": [
+    { "id": "ui", "label": "界面" },
+    { "id": "main", "label": "Main", "owns": ["placement", "session_endpoints", "status_mapping"] },
+    { "id": "runtime", "label": "Runtime", "owns": ["isolation", "session_forwarding"] },
+    { "id": "app", "label": "业务进程" }
+  ]
+}

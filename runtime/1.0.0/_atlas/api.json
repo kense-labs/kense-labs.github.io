@@ -1,0 +1,70 @@
+{
+  "id": "api",
+  "title": "API 参考",
+  "schema": "krun.control.v1",
+  "surfaces": [
+    { "id": "control", "schema": "krun.control.v1", "caller": "main_proxy" },
+    { "id": "tools", "schema": "krun.tools.v1", "caller": "guest_session" },
+    { "id": "tipc", "schema": "upstream-tipc-handoff.v1", "caller": "renderer_readonly" }
+  ],
+  "groups": [
+    {
+      "id": "health",
+      "methods": ["doctor", "list", "validate", "reclaim_orphans", "reclaim_pin", "uninstall_pin", "gc_pins"]
+    },
+    {
+      "id": "session",
+      "methods": ["activate", "deactivate", "handoff_prepare", "handoff_commit", "handoff_abort"]
+    },
+    {
+      "id": "host_tools",
+      "methods": ["host_tools/prepare", "host_endpoint", "host_call", "host_cancel"]
+    },
+    {
+      "id": "capabilities",
+      "methods": [
+        "capabilities/open",
+        "capabilities/close",
+        "capabilities/call",
+        "capabilities/execute",
+        "capabilities/cancel",
+        "directories/grant",
+        "directories/update",
+        "directories/revoke",
+        "directories/list"
+      ]
+    },
+    {
+      "id": "guest_shares",
+      "methods": ["guest_shares/add", "guest_shares/remove", "guest_shares/list"]
+    },
+    {
+      "id": "vm_resources",
+      "methods": [
+        "vm_resources/probe",
+        "vm_resources/defaults",
+        "vm_resources/get",
+        "vm_resources/set",
+        "vm_resources/adjust",
+        "vm_resources/status",
+        "vm_resources/events",
+        "vm_resources/recreate"
+      ]
+    },
+    {
+      "id": "core_impl",
+      "methods": ["core_impl/list", "core_impl/get", "core_impl/set", "core_impl/status"]
+    }
+  ],
+  "errors": [
+    "invalid_package",
+    "pin_mismatch",
+    "backend_unavailable",
+    "acp_negotiate_failed",
+    "protocol_violation",
+    "handoff_conflict",
+    "handoff_failed",
+    "fail_closed",
+    "unauthorized"
+  ]
+}

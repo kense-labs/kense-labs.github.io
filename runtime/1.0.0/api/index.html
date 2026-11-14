@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>控制面 API · KRun 1.0.0</title>
+  <meta name="description" content="方法、参数、错误码与状态面。按任务抄代码见调用配方。" />
+  <meta name="doc-version" content="1.0.0" />
+  <meta name="doc-product" content="krun" />
+  <meta name="doc-audience" content="web-main" />
+  
+  <link rel="icon" href="../../../assets/kense-icon.png" />
+  <link rel="stylesheet" href="../../../assets/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+  <header class="docs-header">
+    <a class="docs-brand" href="../../../index.html">
+      <img class="brand-logo" src="../../../assets/kense-mark.png" width="28" height="28" alt="Kense" />
+      <span>Kense</span>
+      <span class="header-divider">/</span>
+      <span class="docs-wordmark">KRun</span>
+    </a>
+    <nav class="header-links" aria-label="站点">
+      <a href="../index/index.html">文档</a>
+      <a class="download-link" href="../../../../INSTALL.md">对接</a>
+    </nav>
+  </header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" aria-label="章节">
+      <div class="sidebar-heading">
+        <img class="sidebar-logo" src="../../../assets/kense-mark.png" width="22" height="22" alt="" />
+        <div>
+          <strong>KRun</strong>
+          <span>隔离运行时</span>
+        </div>
+      </div>
+      <div class="docs-switchers"><details class="docs-switcher">
+  <summary><span class="switcher-label">Version</span><span class="switcher-current">1.0.0</span><span class="switcher-chevron" aria-hidden="true"></span></summary>
+  <div class="switcher-menu"><a href="../../1.0.0/api/index.html" aria-current="page">1.0.0 <small>默认</small></a></div>
+</details></div>
+      <nav class="chapter-nav" aria-label="文档目录">
+        <p class="nav-label">v1.0.0</p>
+        <div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="#" aria-current="page"><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div>
+      </nav>
+      <div class="docs-version"><span class="version-dot"></span> v1.0.0 · 默认</div>
+    </aside>
+    <main id="content">
+      <details class="mobile-navigation">
+        <summary>章节导航</summary>
+        <nav><div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="#" aria-current="page"><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div></nav>
+      </details>
+      <nav class="breadcrumb" aria-label="面包屑">
+        <a href="../../../index.html">文档</a><span>/</span>
+        <a href="../../index.html">KRun</a><span>/</span>
+        <span>v1.0.0</span><span>/</span>
+        <span>控制面 API</span>
+      </nav>
+      <header class="article-heading">
+        <p class="eyebrow">控制面 API</p>
+        <h1>控制面 API</h1>
+        <p class="article-description">方法、参数、错误码与状态面。按任务抄代码见调用配方。</p>
+        <div class="article-meta">
+          <span>更新 2026-11-14</span>
+          <span>文档版本 1.0.0</span>
+          <span>默认</span>
+        </div>
+      </header>
+      <article class="prose">
+<p>读者：<strong>Web Main</strong>。本页是字段与错误码参考，不是教程。第一次？先 <a href="../index/index.html">1 分钟对接</a>。接线走 <a href="../integration/index.html">接入 Main</a>；「先调谁、怎么写」走 <a href="../recipes/index.html">调用配方</a>。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>面</th><th>协议</th><th>调用方</th><th>用途</th></tr></thead><tbody>
+<tr><td>控制面</td><td><code>krun.control.v1</code></td><td>Web Main（<code>@kense/krun</code>）</td><td>健康、会话、能力、共享、资源</td></tr>
+<tr><td>会话工具面</td><td><code>krun.tools.v1</code></td><td>隔离环境内会话</td><td>已开放工具的 list / call / cancel</td></tr>
+<tr><td>产品状态面</td><td>合同定义的状态接口</td><td>界面只读（经 Main 映射）</td><td>交接阶段、安装进度</td></tr>
+</tbody></table></div>
+<p>没有公网 HTTP REST 控制面。控制面是本机双向流上的 <strong>一行一条 UTF-8 JSON</strong>。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>角色</th><th>可调用</th><th>不可调用</th></tr></thead><tbody>
+<tr><td>界面</td><td>产品状态字段</td><td><code>@kense/krun</code>、控制方法、端点原文</td></tr>
+<tr><td>Web Main</td><td><code>@kense/krun</code> + 控制面</td><td>把方法名或端点泄漏给界面</td></tr>
+<tr><td>业务进程</td><td>产品会话；工具名</td><td>控制面；宿主绝对路径</td></tr>
+</tbody></table></div>
+<p>窄对接优先方法见包内 <code>contracts/narrow-dock-naming.v1.json</code>。获准 guest 出站 <strong>未宣称</strong>（默认关网）。</p>
+<h2 id="协议">协议</h2>
+<h3 id="npm-客户端">npm 客户端</h3>
+<p>推荐使用绑定端点的 <code>KrunClient</code>：</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/control-client.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { KrunClient, CONTROL_SCHEMA } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> client</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> KrunClient.</span><span style="color:#6F42C1">fromEnv</span><span style="color:#24292E">(); </span><span style="color:#6A737D">// KRUN_CONTROL_SOCK</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> result</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#24292E"> client.</span><span style="color:#6F42C1">doctor</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">void</span><span style="color:#005CC5"> CONTROL_SCHEMA</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">void</span><span style="color:#24292E"> result;</span></span></code></pre></div>
+<p>低级一行一请求仍可用：</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/control-call.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { controlCall, resolveControlEndpoint, CONTROL_SCHEMA } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> endpoint</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> resolveControlEndpoint</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">endpoint) </span><span style="color:#D73A49">throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span><span style="color:#032F62">'control endpoint missing'</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> result</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> controlCall</span><span style="color:#24292E">(endpoint, </span><span style="color:#032F62">'doctor'</span><span style="color:#24292E">, {});</span></span>
+<span class="line"><span style="color:#D73A49">void</span><span style="color:#005CC5"> CONTROL_SCHEMA</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">void</span><span style="color:#24292E"> result;</span></span></code></pre></div>
+<h3 id="端点">端点</h3>
+<div class="table-scroll"><table>
+<thead><tr><th>项</th><th>约定</th></tr></thead><tbody>
+<tr><td>控制端点</td><td><code>CONTROL_ENDPOINT_ENV</code>（<code>KRUN_CONTROL_SOCK</code>）；未设置时落在 Runtime 数据目录</td></tr>
+<tr><td>数据目录</td><td><code>KRUN_DATA_DIR</code>；未设置时为平台默认用户数据目录下的 <code>krun</code></td></tr>
+<tr><td>启动服务</td><td><code>krun serve</code>（二进制由 <code>resolveKrunBinary()</code> 解析）</td></tr>
+</tbody></table></div>
+<p>隔离环境端点与帧上限见包内 <code>contracts/local-endpoints.json</code>（勿向界面暴露原文路径）。</p>
+<h3 id="请求包络">请求包络</h3>
+<p>每条请求必须包含版本、不透明 <code>id</code>、方法名与参数对象：</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">control-request.json</span><span class="code-meta">json</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "v"</span><span style="color:#24292E">: </span><span style="color:#032F62">"krun.control.v1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "id"</span><span style="color:#24292E">: </span><span style="color:#032F62">"req-1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "method"</span><span style="color:#24292E">: </span><span style="color:#032F62">"doctor"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "params"</span><span style="color:#24292E">: {}</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+<h3 id="响应包络">响应包络</h3>
+<p>成功：</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">control-response-ok.json</span><span class="code-meta">json</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "v"</span><span style="color:#24292E">: </span><span style="color:#032F62">"krun.control.v1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "id"</span><span style="color:#24292E">: </span><span style="color:#032F62">"req-1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "result"</span><span style="color:#24292E">: {}</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+<p>失败：</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">control-response-error.json</span><span class="code-meta">json</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "v"</span><span style="color:#24292E">: </span><span style="color:#032F62">"krun.control.v1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "id"</span><span style="color:#24292E">: </span><span style="color:#032F62">"req-1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "error"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">    "code"</span><span style="color:#24292E">: </span><span style="color:#032F62">"protocol_violation"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "message"</span><span style="color:#24292E">: </span><span style="color:#032F62">"…"</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+<h2 id="错误码">错误码</h2>
+<p>控制面稳定错误码（<code>error.code</code>）：</p>
+<div class="table-scroll"><table>
+<thead><tr><th>码</th><th>含义</th></tr></thead><tbody>
+<tr><td><code>invalid_package</code></td><td>包校验失败</td></tr>
+<tr><td><code>pin_mismatch</code></td><td>pin / 摘要不匹配</td></tr>
+<tr><td><code>backend_unavailable</code></td><td>后端不可用</td></tr>
+<tr><td><code>acp_negotiate_failed</code></td><td>会话协商失败</td></tr>
+<tr><td><code>protocol_violation</code></td><td>请求不合法或缺字段</td></tr>
+<tr><td><code>handoff_conflict</code></td><td>交接冲突</td></tr>
+<tr><td><code>handoff_failed</code></td><td>交接失败</td></tr>
+<tr><td><code>fail_closed</code></td><td>失败关闭（含未实现路径）</td></tr>
+<tr><td><code>unauthorized</code></td><td>未授权</td></tr>
+<tr><td><code>invalid_params</code></td><td>参数非法</td></tr>
+<tr><td><code>session_revoked</code></td><td>会话已撤</td></tr>
+<tr><td><code>provider_failed</code></td><td>provider 回调失败</td></tr>
+<tr><td><code>timeout</code></td><td>客户端超时（<code>@kense/krun</code>）</td></tr>
+<tr><td><code>transport</code></td><td>套接字 / 截断 / 非 JSON</td></tr>
+<tr><td><code>missing_endpoint</code></td><td>未设 <code>KRUN_CONTROL_SOCK</code> 或 endpoint 为空</td></tr>
+</tbody></table></div>
+<p>能力子调用还可能返回其它字符串码；分支优先看 <code>error.code</code> / <code>KrunControlError.code</code>。</p>
+<h2 id="方法索引">方法索引</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>分组</th><th>方法</th><th>作用</th></tr></thead><tbody>
+<tr><td>健康 / 包</td><td><code>doctor</code></td><td>健康、后端、缺口与摘要</td></tr>
+<tr><td></td><td><code>list</code></td><td>列出已注册 harness</td></tr>
+<tr><td></td><td><code>validate</code></td><td>校验并安装包</td></tr>
+<tr><td></td><td><code>reclaim_orphans</code></td><td>回收孤儿会话</td></tr>
+<tr><td></td><td><code>reclaim_pin</code> / <code>uninstall_pin</code></td><td>回收 / 卸载 pin</td></tr>
+<tr><td></td><td><code>gc_pins</code></td><td>按配额清理无引用 pin</td></tr>
+<tr><td>会话</td><td><code>activate</code></td><td>打开会话，返回流句柄</td></tr>
+<tr><td></td><td><code>deactivate</code></td><td>关闭代际会话</td></tr>
+<tr><td></td><td><code>handoff_prepare</code></td><td>交接：封存来源</td></tr>
+<tr><td></td><td><code>handoff_commit</code></td><td>交接：提交到目标</td></tr>
+<tr><td></td><td><code>handoff_abort</code></td><td>交接：中止</td></tr>
+<tr><td>宿主工具</td><td><code>host_tools/prepare</code></td><td>准备授权与 generation（Authz）</td></tr>
+<tr><td></td><td><code>host_tools/discard</code></td><td>清掉未消费的 pending prepare</td></tr>
+<tr><td></td><td><code>host_endpoint</code></td><td>取会话内宿主工具拨号信息</td></tr>
+<tr><td></td><td><code>host_call</code></td><td>代发工具调用</td></tr>
+<tr><td></td><td><code>host_cancel</code></td><td>取消在途工具调用（≠ 证明子进程已死）</td></tr>
+<tr><td>出站 Authz</td><td><code>egress/status</code></td><td>出站授权状态</td></tr>
+<tr><td></td><td><code>egress/admit</code></td><td>显式 admit（本身不开网）</td></tr>
+<tr><td></td><td><code>egress/revoke</code></td><td>撤销 admit</td></tr>
+<tr><td>生命周期</td><td><code>lifecycle/events</code></td><td>观测事件环（不授写权）</td></tr>
+<tr><td>能力</td><td><code>capabilities/open</code></td><td>打开能力租约</td></tr>
+<tr><td></td><td><code>capabilities/close</code></td><td>关闭租约</td></tr>
+<tr><td></td><td><code>capabilities/call</code></td><td>执行能力（可回调 provider）</td></tr>
+<tr><td></td><td><code>capabilities/execute</code></td><td>内置执行</td></tr>
+<tr><td></td><td><code>capabilities/cancel</code></td><td>取消执行</td></tr>
+<tr><td>目录授权</td><td><code>directories/grant</code></td><td>授予目录</td></tr>
+<tr><td></td><td><code>directories/update</code></td><td>更新授权</td></tr>
+<tr><td></td><td><code>directories/revoke</code></td><td>撤销授权</td></tr>
+<tr><td></td><td><code>directories/list</code></td><td>列出授权</td></tr>
+<tr><td>工作区共享</td><td><code>guest_shares/add</code></td><td>增加共享</td></tr>
+<tr><td></td><td><code>guest_shares/remove</code></td><td>移除共享</td></tr>
+<tr><td></td><td><code>guest_shares/list</code></td><td>列出共享</td></tr>
+<tr><td>资源</td><td><code>vm_resources/probe</code></td><td>探测宿主资源</td></tr>
+<tr><td></td><td><code>vm_resources/defaults</code></td><td>计算默认 desired</td></tr>
+<tr><td></td><td><code>vm_resources/get</code></td><td>读 desired / applied</td></tr>
+<tr><td></td><td><code>vm_resources/set</code></td><td>设置 desired</td></tr>
+<tr><td></td><td><code>vm_resources/adjust</code></td><td>增量调整 desired</td></tr>
+<tr><td></td><td><code>vm_resources/status</code></td><td>状态 + 压力</td></tr>
+<tr><td></td><td><code>vm_resources/events</code></td><td>事件环</td></tr>
+<tr><td></td><td><code>vm_resources/recreate</code></td><td>显式重建实例</td></tr>
+<tr><td>Core 实现</td><td><code>core_impl/list</code></td><td>列出可用实现</td></tr>
+<tr><td></td><td><code>core_impl/get</code></td><td>读选择</td></tr>
+<tr><td></td><td><code>core_impl/set</code></td><td>设置实现</td></tr>
+<tr><td></td><td><code>core_impl/status</code></td><td>状态</td></tr>
+</tbody></table></div>
+<p>以下按分组展开。参数字段名与运行时 JSON 一致。</p>
+<h2 id="健康与包">健康与包</h2>
+<h3 id="doctor"><code>doctor</code></h3>
+<p>探测 Runtime 健康与配置摘要。</p>
+<div class="table-scroll"><table>
+<thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td>参数</td><td><code>{}</code></td></tr>
+<tr><td>结果</td><td><code>backends</code>、<code>packages</code>、<code>gaps</code>、<code>selection</code>、<code>os</code>、<code>arch</code>；以及共享 / 资源 / Core 实现摘要（若启用）</td></tr>
+<tr><td>注意</td><td>全量结果供运维；界面只映射合同允许的状态字段</td></tr>
+</tbody></table></div>
+<h3 id="list"><code>list</code></h3>
+<p>刷新并返回 harness 注册表。</p>
+<div class="table-scroll"><table>
+<thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td>参数</td><td>无</td></tr>
+<tr><td>结果</td><td><code>revision</code>、<code>entries[]</code>（<code>harness</code>、<code>name</code>、<code>version</code>、<code>ok</code>、…）、<code>gaps[]</code></td></tr>
+</tbody></table></div>
+<h3 id="validate"><code>validate</code></h3>
+<p>校验安装包并写入 CAS。</p>
+<div class="table-scroll"><table>
+<thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td>参数</td><td><code>path</code>（必填）；<code>expect</code>（可选期望）</td></tr>
+<tr><td>结果</td><td><code>digest</code>、<code>id</code>、<code>version</code>、<code>name</code>、<code>status</code>、<code>progress[]</code></td></tr>
+<tr><td>错误</td><td><code>invalid_package</code>、<code>pin_mismatch</code></td></tr>
+</tbody></table></div>
+<h3 id="reclaimorphans"><code>reclaim_orphans</code></h3>
+<p>回收孤儿会话目录。结果：<code>{ "reclaimed": string[] }</code>。</p>
+<h3 id="reclaimpin-uninstallpin"><code>reclaim_pin</code> / <code>uninstall_pin</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>pin</code></td><td>目标 pin</td></tr>
+</tbody></table></div>
+<p>结果含 <code>ok</code>、<code>pin</code>、以及是否移除 CAS / 源包等字段。</p>
+<h3 id="gcpins"><code>gc_pins</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>need_bytes</code></td><td>可选；需要腾出的字节</td></tr>
+<tr><td><code>keep_unreferenced</code></td><td>可选；是否保留无引用</td></tr>
+</tbody></table></div>
+<h2 id="会话生命周期">会话生命周期</h2>
+<h3 id="activate"><code>activate</code></h3>
+<p>打开可写产品会话。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>harness</code></td><td><code>{ id, source, pin }</code>；<code>source</code> 为 <code>local_zip</code> 或 <code>cloud_acp</code></td></tr>
+<tr><td><code>request_id</code></td><td>必填；幂等键</td></tr>
+<tr><td><code>task_id</code></td><td>可选任务 id</td></tr>
+<tr><td><code>workspace_bind</code> / <code>workspace_binding</code></td><td>可选工作区绑定</td></tr>
+<tr><td><code>tools_admitted</code></td><td>可选已开放工具名</td></tr>
+<tr><td><code>runtime_generation</code></td><td>可选代际</td></tr>
+<tr><td><code>host_capabilities</code></td><td>可选：<code>tools_admitted</code>、<code>network</code>、<code>expires_at_ms</code></td></tr>
+<tr><td><code>host_tools_endpoint</code></td><td>可选；须先完成 <code>host_tools/prepare</code></td></tr>
+</tbody></table></div>
+<div class="table-scroll"><table>
+<thead><tr><th>结果</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>harness</code></td><td>实际 harness</td></tr>
+<tr><td><code>generation</code></td><td>会话代际</td></tr>
+<tr><td><code>stream_handle</code></td><td>会话数据面句柄（仅 Main 持有）</td></tr>
+<tr><td><code>backend</code></td><td>后端标识</td></tr>
+<tr><td><code>acp_version</code></td><td>协商版本</td></tr>
+</tbody></table></div>
+<p><code>cloud_acp</code> 在当前版本失败关闭。发版路径使用 <code>local_zip</code>。</p>
+<h3 id="deactivate"><code>deactivate</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>task_id</code></td><td>任务 id</td></tr>
+<tr><td><code>generation</code></td><td>代际</td></tr>
+</tbody></table></div>
+<p>结果：<code>{ "ok": true }</code>。</p>
+<h3 id="handoffprepare-handoffcommit-handoffabort"><code>handoff_prepare</code> / <code>handoff_commit</code> / <code>handoff_abort</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>方法</th><th>作用</th><th>关键参数</th></tr></thead><tbody>
+<tr><td><code>handoff_prepare</code></td><td>封存来源会话</td><td>交接命令对象</td></tr>
+<tr><td><code>handoff_commit</code></td><td>seal 并打开目标</td><td><code>task_id</code>、<code>request_id</code></td></tr>
+<tr><td><code>handoff_abort</code></td><td>中止并恢复空闲</td><td><code>task_id</code>、<code>request_id</code></td></tr>
+</tbody></table></div>
+<p>结果为交接回执（含阶段、代际等）。冲突时返回 <code>handoff_conflict</code> 或 <code>handoff_failed</code>。</p>
+<h2 id="宿主工具">宿主工具</h2>
+<p>SDK 类型化入口：<code>client.hostTools.prepare</code> / <code>.discard</code>。路径、沙箱、tree-kill 等执行在 Main 侧宿主工具桥完成，不在本包导出。</p>
+<p>产品工具名（合同 <code>host-six-tools.json</code>）：<code>Read</code>、<code>Write</code>、<code>Edit</code>、<code>Grep</code>、<code>Bash</code>；Desktop / Browser 名见 <code>HOST_TOOL_NAMES</code>。<code>Program</code> 是合同占位，不在 SDK <code>HOST_TOOL_NAMES</code> 表。</p>
+<h3 id="hosttoolsprepare"><code>host_tools/prepare</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>task_id</code></td><td>任务 id</td></tr>
+<tr><td><code>runtime_generation</code></td><td>代际（`string \</td><td>number`）</td></tr>
+<tr><td><code>workspace_binding</code></td><td>工作区绑定</td></tr>
+<tr><td><code>expires_at_ms</code></td><td>可选过期时间</td></tr>
+<tr><td><code>tools_admitted</code></td><td>可选工具名列表（permission）；<strong>不等于</strong>路径授权</td></tr>
+</tbody></table></div>
+<p>结果：<code>HostToolsGrant</code>（<code>scope</code>、<code>authorization</code>、可选 <code>generation</code> / <code>host_tools_endpoint</code> / <code>expires_at_ms</code>）。<code>authorization</code> 只留 Main，勿进界面或日志明文。</p>
+<h3 id="hosttoolsdiscard"><code>host_tools/discard</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>task_id</code></td><td>任务 id</td></tr>
+</tbody></table></div>
+<p>清掉 control 上尚未被 <code>activate</code> 消费的 pending prepare。不撤销 Main 侧执行租约。</p>
+<h3 id="hostendpoint"><code>host_endpoint</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>task_id</code></td><td>任务 id</td></tr>
+<tr><td><code>generation</code></td><td>代际</td></tr>
+</tbody></table></div>
+<p>结果：<code>endpoint</code>、<code>session</code>、<code>authorization</code>。仅 Main 使用。</p>
+<h3 id="hostcall-hostcancel"><code>host_call</code> / <code>host_cancel</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>task_id</code></td><td>任务 id</td></tr>
+<tr><td><code>generation</code></td><td>代际</td></tr>
+<tr><td><code>call_id</code></td><td>调用 id</td></tr>
+<tr><td><code>name</code></td><td>工具名</td></tr>
+<tr><td><code>arguments</code></td><td>参数对象</td></tr>
+</tbody></table></div>
+<p><code>host_call</code> 返回工具结果 JSON。<code>host_cancel</code> 取消对应在途调用；控制面不再认这笔调用，<strong>不证明</strong>远端子进程已死。</p>
+<h2 id="出站-authz-与生命周期观测">出站 Authz 与生命周期观测</h2>
+<h3 id="egressstatus-egressadmit-egressrevoke"><code>egress/status</code> · <code>egress/admit</code> · <code>egress/revoke</code></h3>
+<p>无 <code>KrunClient</code> typed helper，用 <code>client.call</code>。SDK 常量：<code>NARROW_EGRESS_AUTHZ</code>、<code>EGRESS_CLAIMED_DEFAULT</code>（<code>false</code>）、<code>EgressAdmitRef</code>。</p>
+<p>admit 只做授权意图，本身不开网。guest native 未具备时返回 77 / FailClosed，<strong>不等于</strong>产品出站 Pass。</p>
+<h3 id="lifecycleevents"><code>lifecycle/events</code></h3>
+<p>Helper：<code>client.lifecycle.events({ since_seq? })</code>。结果含 <code>events[]</code>、<code>next_seq</code>。观测面不授予写权限。信封禁止绝对 <code>host_path</code>、明文 token、密码。</p>
+<h2 id="能力与目录">能力与目录</h2>
+<h3 id="capabilitiesopen"><code>capabilities/open</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>task_id</code></td><td>任务 id</td></tr>
+<tr><td><code>runtime_generation</code></td><td>代际</td></tr>
+<tr><td><code>workspace_binding</code></td><td>工作区</td></tr>
+<tr><td><code>capabilities</code></td><td>能力描述数组</td></tr>
+<tr><td><code>admitted</code></td><td>已开放名单</td></tr>
+<tr><td><code>execution</code></td><td>可选：<code>workspace</code>、<code>read_only</code></td></tr>
+</tbody></table></div>
+<p>结果：<code>lease</code> 与 <code>capabilities[]</code>。</p>
+<h3 id="capabilitiesclose"><code>capabilities/close</code></h3>
+<p>参数：能力租约对象。结果：<code>{ "closed": true }</code>。</p>
+<h3 id="capabilitiescall"><code>capabilities/call</code></h3>
+<p>在租约下执行能力。执行期可能在同一连接上出现内部 <code>provider/call</code> 回调；<strong>不要</strong>把 <code>provider/call</code> 当作独立产品 API 对外暴露。</p>
+<h3 id="capabilitiesexecute-capabilitiescancel"><code>capabilities/execute</code> / <code>capabilities/cancel</code></h3>
+<p>内置 Rust worker 执行 / 取消。参数为能力调用对象。</p>
+<h3 id="directoriesgrant-update-revoke-list"><code>directories/grant</code> / <code>update</code> / <code>revoke</code> / <code>list</code></h3>
+<p>版本化目录授权的增改撤查。<code>list</code> 的参数为租约；其余为对应 grant / update / revoke 对象。</p>
+<h2 id="工作区共享">工作区共享</h2>
+<p>合同：<code>krun-vm-identity.v1.json</code>。控制面 <strong>拒绝</strong> <code>host_path</code> 参数。</p>
+<p>标识字符集：</p>
+<div class="table-scroll"><table>
+<thead><tr><th>字段</th><th>规则</th></tr></thead><tbody>
+<tr><td><code>name</code>（机器名）</td><td><code>[A-Za-z0-9._-]{1,64}</code></td></tr>
+<tr><td><code>share_id</code></td><td><code>[A-Za-z0-9_-]{1,64}</code></td></tr>
+</tbody></table></div>
+<p>业务侧看到的是含 <code>share_id</code> 的稳定 guest 路径，不是宿主绝对路径。</p>
+<h3 id="guestsharesadd"><code>guest_shares/add</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>name</code></td><td>机器名</td></tr>
+<tr><td><code>share_id</code></td><td>共享 id</td></tr>
+</tbody></table></div>
+<p>结果：<code>share_id</code>、<code>guest</code>，以及可选的回收字段。</p>
+<h3 id="guestsharesremove"><code>guest_shares/remove</code></h3>
+<p>参数同 <code>add</code>。</p>
+<h3 id="guestshareslist"><code>guest_shares/list</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>name</code></td><td>机器名</td></tr>
+</tbody></table></div>
+<p>结果：共享条目数组。</p>
+<h2 id="资源">资源</h2>
+<p>合同：<code>vm-resources.v1.json</code>。<code>set</code> / <code>adjust</code> 只写 <strong>desired</strong>；<strong>不声称热扩容</strong>。运行中实例在变更后多为 <code>needs_restart</code>；需要生效时显式 <code>recreate</code>。</p>
+<p><code>apply_state</code>：<code>applied</code> | <code>needs_restart</code> | <code>recreating</code> | <code>unavailable</code>。</p>
+<h3 id="vmresourcesprobe"><code>vm_resources/probe</code></h3>
+<p>无参数。结果：<code>cpu_logical</code>、<code>mem_*_mib</code>、<code>disk_*</code>、<code>disk_root</code>（仅标签）、<code>partial</code>。</p>
+<h3 id="vmresourcesdefaults"><code>vm_resources/defaults</code></h3>
+<p>无参数。结果：<code>cpus</code>、<code>memory_mib</code>、<code>disk_mib</code>、<code>profile</code>。</p>
+<h3 id="vmresourcesget"><code>vm_resources/get</code></h3>
+<p>无参数。结果：<code>desired</code>、<code>applied</code>、<code>apply_state</code>、<code>tracked_name</code>。</p>
+<h3 id="vmresourcesset"><code>vm_resources/set</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>cpus</code></td><td>1..32</td></tr>
+<tr><td><code>memory_mib</code></td><td>128..32768</td></tr>
+<tr><td><code>disk_mib</code></td><td>磁盘上限</td></tr>
+<tr><td><code>profile</code></td><td>可选：<code>auto</code> \</td><td><code>manual</code></td></tr>
+<tr><td><code>name</code></td><td>可选机器名</td></tr>
+</tbody></table></div>
+<h3 id="vmresourcesadjust"><code>vm_resources/adjust</code></h3>
+<p>至少提供一项资源字段；可选 <code>name</code>。</p>
+<h3 id="vmresourcesstatus"><code>vm_resources/status</code></h3>
+<p>可选 <code>name</code>。结果在 get 基础上增加 <code>probe</code>、<code>pressure</code>。</p>
+<h3 id="vmresourcesevents"><code>vm_resources/events</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>since_seq</code></td><td>可选；默认 <code>0</code></td></tr>
+</tbody></table></div>
+<p>结果：<code>events[]</code>、<code>next_seq</code>。事件环容量 64。类型含 <code>defaults_computed</code>、<code>desired_changed</code>、<code>needs_restart</code>、<code>recreate_finished</code>、<code>pressure</code>。</p>
+<h3 id="vmresourcesrecreate"><code>vm_resources/recreate</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>name</code></td><td>机器名（必填）</td></tr>
+</tbody></table></div>
+<p>显式停止再启动以使 desired 生效。</p>
+<h2 id="core-实现">Core 实现</h2>
+<p>合同：<code>core-impl.v1.json</code>。v1 内置实现 id：<code>default</code>。省略或空字符串视为 <code>default</code>。</p>
+<h3 id="coreimpllist"><code>core_impl/list</code></h3>
+<p>无参数。结果：<code>[{ "impl", "kind", "available" }]</code>。</p>
+<h3 id="coreimplget"><code>core_impl/get</code></h3>
+<p>无参数。结果：<code>desired</code>、<code>applied</code>、<code>apply_state</code>。</p>
+<h3 id="coreimplset"><code>core_impl/set</code></h3>
+<div class="table-scroll"><table>
+<thead><tr><th>参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>impl</code></td><td>可选；空 → <code>default</code></td></tr>
+<tr><td><code>name</code></td><td>可选机器名</td></tr>
+</tbody></table></div>
+<p>未知 id → 失败关闭。</p>
+<h3 id="coreimplstatus"><code>core_impl/status</code></h3>
+<p>可选 <code>name</code>。在 get 基础上增加 <code>available</code>、<code>builtin</code>。</p>
+<h2 id="会话工具面">会话工具面</h2>
+<p>协议：<code>krun.tools.v1</code>。在隔离环境内的工具通道上调用（路径由 <code>local-endpoints</code> 合同给出）。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>方法</th><th>作用</th></tr></thead><tbody>
+<tr><td><code>tools/hello</code></td><td>探活</td></tr>
+<tr><td><code>tools/list</code></td><td>列出已开放工具</td></tr>
+<tr><td><code>tools/call</code></td><td>调用工具：<code>params.name</code>、<code>params.arguments</code>；帧内带会话与授权</td></tr>
+<tr><td><code>tools/cancel</code></td><td>取消：<code>params.id</code> 为在途 call id</td></tr>
+</tbody></table></div>
+<p>典型错误：<code>protocol_violation</code>、<code>method_not_found</code>、<code>busy</code>、<code>duplicate_id</code>、<code>unknown_tool</code>、<code>tool_failed</code>、<code>resource_denied</code>、<code>cancelled</code>。</p>
+<h2 id="产品状态面">产品状态面</h2>
+<p>合同：<code>upstream-tipc-handoff.v1.json</code>。由宿主 Main 映射为界面只读状态；<strong>不是</strong>控制面方法。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>状态方法</th><th>输出要点</th></tr></thead><tbody>
+<tr><td><code>getHandoffStatus</code></td><td><code>available</code>、<code>phase</code>（<code>idle</code> \</td><td><code>preparing</code> \</td><td><code>committed</code> \</td><td><code>aborted</code> \</td><td><code>unknown</code>）、代际、时间、<code>surface</code></td></tr>
+<tr><td><code>getInstallProgress</code></td><td><code>available</code>、<code>status</code>（<code>idle</code> \</td><td><code>installed</code> \</td><td><code>failed</code> \</td><td><code>unknown</code>）、<code>steps[]</code>、<code>last_error_code</code></td></tr>
+</tbody></table></div>
+<p>界面不得出现控制方法名、端点或 pin 原文。<code>vm_resources/*</code>、<code>guest_shares/*</code>、<code>core_impl/*</code> <strong>无</strong> 界面仪表盘。</p>
+<h2 id="合同索引">合同索引</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>合同</th><th>作用</th></tr></thead><tbody>
+<tr><td><code>narrow-dock.json</code></td><td>产品窄对接与可见边界</td></tr>
+<tr><td><code>narrow-dock-naming.v1.json</code></td><td>方法命名与分层</td></tr>
+<tr><td><code>local-endpoints.json</code></td><td>隔离环境端点与帧上限</td></tr>
+<tr><td><code>krun-vm-identity.v1.json</code></td><td>机器名 / <code>share_id</code> 与共享 FailClosed</td></tr>
+<tr><td><code>vm-resources.v1.json</code></td><td>资源方法语义</td></tr>
+<tr><td><code>core-impl.v1.json</code></td><td>Core 实现选择</td></tr>
+<tr><td><code>host-six-tools.json</code></td><td>产品宿主工具名</td></tr>
+<tr><td><code>host-desktop-browser.v1.json</code></td><td>可选桌面 / 浏览器能力</td></tr>
+<tr><td><code>upstream-tipc-handoff.v1.json</code></td><td>界面状态字段</td></tr>
+<tr><td><code>a07-ga-scope.json</code></td><td>GA 能力范围</td></tr>
+</tbody></table></div>
+<p>权威实现以运行中的 KRun（主机二进制 <code>krun</code>）与上述合同为准。破坏性变更提升 <code>.vN</code>。</p>
+<h2 id="相关">相关</h2>
+<ul>
+<li><a href="../recipes/index.html">调用配方</a>  </li>
+<li><a href="../integration/index.html">接入 Main</a>  </li>
+<li><a href="../dock-delta/index.html">迁出本机旁路</a>  </li>
+<li><a href="../operations/index.html">发版检查</a>  </li>
+<li><a href="../../../../contracts/"><code>contracts/</code></a>  </li>
+</ul>
+      </article>
+      <nav class="page-navigation" aria-label="相邻章节">
+    <a href="../recipes/index.html"><span>上一篇</span><strong>调用配方</strong></a>
+    <a href="../operations/index.html"><span>下一篇</span><strong>发版检查</strong></a>
+  </nav>
+      <footer class="docs-footer">
+        <span>Kense KRun · v1.0.0</span>
+        <span>文档</span>
+      </footer>
+    </main>
+    <aside class="docs-toc" aria-label="本页目录">
+      <div class="toc-content">
+        <p class="nav-label">本页</p>
+        <nav><a href="#协议">协议</a>
+<a href="#npm-客户端" style="padding-left:10px">npm 客户端</a>
+<a href="#端点" style="padding-left:10px">端点</a>
+<a href="#请求包络" style="padding-left:10px">请求包络</a>
+<a href="#响应包络" style="padding-left:10px">响应包络</a>
+<a href="#错误码">错误码</a>
+<a href="#方法索引">方法索引</a>
+<a href="#健康与包">健康与包</a>
+<a href="#doctor" style="padding-left:10px">doctor</a>
+<a href="#list" style="padding-left:10px">list</a>
+<a href="#validate" style="padding-left:10px">validate</a>
+<a href="#reclaimorphans" style="padding-left:10px">reclaim_orphans</a>
+<a href="#reclaimpin-uninstallpin" style="padding-left:10px">reclaim_pin / uninstall_pin</a>
+<a href="#gcpins" style="padding-left:10px">gc_pins</a>
+<a href="#会话生命周期">会话生命周期</a>
+<a href="#activate" style="padding-left:10px">activate</a>
+<a href="#deactivate" style="padding-left:10px">deactivate</a>
+<a href="#handoffprepare-handoffcommit-handoffabort" style="padding-left:10px">handoff_prepare / handoff_commit / handoff_abort</a>
+<a href="#宿主工具">宿主工具</a>
+<a href="#hosttoolsprepare" style="padding-left:10px">host_tools/prepare</a>
+<a href="#hosttoolsdiscard" style="padding-left:10px">host_tools/discard</a>
+<a href="#hostendpoint" style="padding-left:10px">host_endpoint</a>
+<a href="#hostcall-hostcancel" style="padding-left:10px">host_call / host_cancel</a>
+<a href="#出站-authz-与生命周期观测">出站 Authz 与生命周期观测</a>
+<a href="#egressstatus-egressadmit-egressrevoke" style="padding-left:10px">egress/status · egress/admit · egress/revoke</a>
+<a href="#lifecycleevents" style="padding-left:10px">lifecycle/events</a>
+<a href="#能力与目录">能力与目录</a>
+<a href="#capabilitiesopen" style="padding-left:10px">capabilities/open</a>
+<a href="#capabilitiesclose" style="padding-left:10px">capabilities/close</a>
+<a href="#capabilitiescall" style="padding-left:10px">capabilities/call</a>
+<a href="#capabilitiesexecute-capabilitiescancel" style="padding-left:10px">capabilities/execute / capabilities/cancel</a>
+<a href="#directoriesgrant-update-revoke-list" style="padding-left:10px">directories/grant / update / revoke / list</a>
+<a href="#工作区共享">工作区共享</a>
+<a href="#guestsharesadd" style="padding-left:10px">guest_shares/add</a>
+<a href="#guestsharesremove" style="padding-left:10px">guest_shares/remove</a>
+<a href="#guestshareslist" style="padding-left:10px">guest_shares/list</a>
+<a href="#资源">资源</a>
+<a href="#vmresourcesprobe" style="padding-left:10px">vm_resources/probe</a>
+<a href="#vmresourcesdefaults" style="padding-left:10px">vm_resources/defaults</a>
+<a href="#vmresourcesget" style="padding-left:10px">vm_resources/get</a>
+<a href="#vmresourcesset" style="padding-left:10px">vm_resources/set</a>
+<a href="#vmresourcesadjust" style="padding-left:10px">vm_resources/adjust</a>
+<a href="#vmresourcesstatus" style="padding-left:10px">vm_resources/status</a>
+<a href="#vmresourcesevents" style="padding-left:10px">vm_resources/events</a>
+<a href="#vmresourcesrecreate" style="padding-left:10px">vm_resources/recreate</a>
+<a href="#core-实现">Core 实现</a>
+<a href="#coreimpllist" style="padding-left:10px">core_impl/list</a>
+<a href="#coreimplget" style="padding-left:10px">core_impl/get</a>
+<a href="#coreimplset" style="padding-left:10px">core_impl/set</a>
+<a href="#coreimplstatus" style="padding-left:10px">core_impl/status</a>
+<a href="#会话工具面">会话工具面</a>
+<a href="#产品状态面">产品状态面</a>
+<a href="#合同索引">合同索引</a>
+<a href="#相关">相关</a></nav>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

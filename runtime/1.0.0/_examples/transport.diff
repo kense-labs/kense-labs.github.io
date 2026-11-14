@@ -1,0 +1,8 @@
+--- a/main/session.ts
++++ b/main/session.ts
+@@
+-const local = await startLocalProcesses(bundle);
+-session = openSession(local);
++requireSessionEndpoints(placement);
++const endpoints = await connectSessionEndpoints(placement);
++session = openSession(endpoints.primary);

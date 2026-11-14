@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>调用配方 · KRun 1.0.0</title>
+  <meta name="description" content="按任务组织的 Main 调用路径：什么时候用哪条 API，以及可落地的代码片段。" />
+  <meta name="doc-version" content="1.0.0" />
+  <meta name="doc-product" content="krun" />
+  <meta name="doc-audience" content="web-main" />
+  
+  <link rel="icon" href="../../../assets/kense-icon.png" />
+  <link rel="stylesheet" href="../../../assets/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+  <header class="docs-header">
+    <a class="docs-brand" href="../../../index.html">
+      <img class="brand-logo" src="../../../assets/kense-mark.png" width="28" height="28" alt="Kense" />
+      <span>Kense</span>
+      <span class="header-divider">/</span>
+      <span class="docs-wordmark">KRun</span>
+    </a>
+    <nav class="header-links" aria-label="站点">
+      <a href="../index/index.html">文档</a>
+      <a class="download-link" href="../../../../INSTALL.md">对接</a>
+    </nav>
+  </header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" aria-label="章节">
+      <div class="sidebar-heading">
+        <img class="sidebar-logo" src="../../../assets/kense-mark.png" width="22" height="22" alt="" />
+        <div>
+          <strong>KRun</strong>
+          <span>隔离运行时</span>
+        </div>
+      </div>
+      <div class="docs-switchers"><details class="docs-switcher">
+  <summary><span class="switcher-label">Version</span><span class="switcher-current">1.0.0</span><span class="switcher-chevron" aria-hidden="true"></span></summary>
+  <div class="switcher-menu"><a href="../../1.0.0/recipes/index.html" aria-current="page">1.0.0 <small>默认</small></a></div>
+</details></div>
+      <nav class="chapter-nav" aria-label="文档目录">
+        <p class="nav-label">v1.0.0</p>
+        <div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="#" aria-current="page"><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div>
+      </nav>
+      <div class="docs-version"><span class="version-dot"></span> v1.0.0 · 默认</div>
+    </aside>
+    <main id="content">
+      <details class="mobile-navigation">
+        <summary>章节导航</summary>
+        <nav><div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="../index/index.html" ><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="#" aria-current="page"><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div></nav>
+      </details>
+      <nav class="breadcrumb" aria-label="面包屑">
+        <a href="../../../index.html">文档</a><span>/</span>
+        <a href="../../index.html">KRun</a><span>/</span>
+        <span>v1.0.0</span><span>/</span>
+        <span>调用配方</span>
+      </nav>
+      <header class="article-heading">
+        <p class="eyebrow">调用配方</p>
+        <h1>调用配方</h1>
+        <p class="article-description">按任务组织的 Main 调用路径：什么时候用哪条 API，以及可落地的代码片段。</p>
+        <div class="article-meta">
+          <span>更新 2026-11-14</span>
+          <span>文档版本 1.0.0</span>
+          <span>默认</span>
+        </div>
+      </header>
+      <article class="prose">
+<p>读者：改 Web Main 薄代理的人。第一次？先 <a href="../index/index.html">1 分钟对接</a>。需要字段定义时去 <a href="../api/index.html">控制面 API</a>；完整接线走 <a href="../integration/index.html">接入 Main</a>。</p>
+<p><strong>怎么用本页：</strong> 先对上你的任务，再抄对应片段。不要把整页当清单勾完——多数产品路径用不到回收、能力租约或目录授权。</p>
+<h2 id="先分清两件事">先分清两件事</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>你在找</th><th>去哪</th></tr></thead><tbody>
+<tr><td>「这个方法参数叫什么、失败码是什么」</td><td><a href="../api/index.html">控制面 API</a></td></tr>
+<tr><td>「我想完成某件事，该按什么顺序调」</td><td>本页</td></tr>
+</tbody></table></div>
+<p>有 <code>KrunClient</code> helper 的优先用 helper；没有的用 <code>client.call(method, params)</code>。成功拿 <strong>result</strong>，失败拿 <code>KrunControlError.code</code>。</p>
+<p>---</p>
+<h2 id="起控制面并确认活着">起控制面并确认活着</h2>
+<p>二进制找不到就别往下走。<code>spawnKrunServe</code> <strong>不会</strong>替你等就绪——Main 自己轮询 <code>doctor</code>。</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/boot.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  resolveKrunBinary,</span></span>
+<span class="line"><span style="color:#24292E">  spawnKrunServe,</span></span>
+<span class="line"><span style="color:#24292E">  KrunClient,</span></span>
+<span class="line"><span style="color:#24292E">  CONTROL_ENDPOINT_ENV,</span></span>
+<span class="line"><span style="color:#24292E">} </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> bin</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> resolveKrunBinary</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">bin) </span><span style="color:#D73A49">throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span><span style="color:#032F62">'krun binary missing'</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> dataDir</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> process.env.</span><span style="color:#005CC5">KRUN_DATA_DIR</span><span style="color:#D73A49">!</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> endpoint</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> process.env[</span><span style="color:#005CC5">CONTROL_ENDPOINT_ENV</span><span style="color:#24292E">]</span><span style="color:#D73A49">!</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#6F42C1">spawnKrunServe</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  bin,</span></span>
+<span class="line"><span style="color:#24292E">  dataDir,</span></span>
+<span class="line"><span style="color:#24292E">  env: { [</span><span style="color:#005CC5">CONTROL_ENDPOINT_ENV</span><span style="color:#24292E">]: endpoint, KRUN_DATA_DIR: dataDir },</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">async</span><span style="color:#D73A49"> function</span><span style="color:#6F42C1"> ready</span><span style="color:#24292E">(</span><span style="color:#E36209">ms</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> 15_000</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> until</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Date.</span><span style="color:#6F42C1">now</span><span style="color:#24292E">() </span><span style="color:#D73A49">+</span><span style="color:#24292E"> ms;</span></span>
+<span class="line"><span style="color:#D73A49">  for</span><span style="color:#24292E"> (;;) {</span></span>
+<span class="line"><span style="color:#D73A49">    try</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">      return</span><span style="color:#D73A49"> await</span><span style="color:#24292E"> KrunClient.</span><span style="color:#6F42C1">fromEnv</span><span style="color:#24292E">().</span><span style="color:#6F42C1">doctor</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">    } </span><span style="color:#D73A49">catch</span><span style="color:#24292E"> (err) {</span></span>
+<span class="line"><span style="color:#D73A49">      if</span><span style="color:#24292E"> (Date.</span><span style="color:#6F42C1">now</span><span style="color:#24292E">() </span><span style="color:#D73A49">></span><span style="color:#24292E"> until) </span><span style="color:#D73A49">throw</span><span style="color:#24292E"> err;</span></span>
+<span class="line"><span style="color:#D73A49">      await</span><span style="color:#D73A49"> new</span><span style="color:#005CC5"> Promise</span><span style="color:#24292E">((</span><span style="color:#E36209">r</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#6F42C1"> setTimeout</span><span style="color:#24292E">(r, </span><span style="color:#005CC5">50</span><span style="color:#24292E">));</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#6F42C1"> ready</span><span style="color:#24292E">();</span></span></code></pre></div>
+<p><code>doctor</code> 结果给运维/门禁用。不要把 backends 原文塞进界面。</p>
+<p>---</p>
+<h2 id="装包-开会话-收会话">装包 → 开会话 → 收会话</h2>
+<p>发版路径用 <code>local_zip</code>。<code>request_id</code> 是幂等键，别每次乱飘除非你故意开新请求。</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/session.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { KrunClient } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> client</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> KrunClient.</span><span style="color:#6F42C1">fromEnv</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> { </span><span style="color:#E36209">digest</span><span style="color:#24292E">: </span><span style="color:#005CC5">pin</span><span style="color:#24292E"> } </span><span style="color:#D73A49">=</span><span style="color:#24292E"> (</span><span style="color:#D73A49">await</span><span style="color:#24292E"> client.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span><span style="color:#032F62">'validate'</span><span style="color:#24292E">, {</span></span>
+<span class="line"><span style="color:#24292E">  path: </span><span style="color:#032F62">'/abs/path/harness.zip'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">})) </span><span style="color:#D73A49">as</span><span style="color:#24292E"> { </span><span style="color:#E36209">digest</span><span style="color:#D73A49">:</span><span style="color:#005CC5"> string</span><span style="color:#24292E"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> { </span><span style="color:#005CC5">generation</span><span style="color:#24292E"> } </span><span style="color:#D73A49">=</span><span style="color:#24292E"> (</span><span style="color:#D73A49">await</span><span style="color:#24292E"> client.session.</span><span style="color:#6F42C1">activate</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  harness: { id: </span><span style="color:#032F62">'demo'</span><span style="color:#24292E">, source: </span><span style="color:#032F62">'local_zip'</span><span style="color:#24292E">, pin },</span></span>
+<span class="line"><span style="color:#24292E">  request_id: </span><span style="color:#032F62">'turn-42'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  task_id: </span><span style="color:#032F62">'task-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  tools_admitted: [</span><span style="color:#032F62">'Read'</span><span style="color:#24292E">, </span><span style="color:#032F62">'Write'</span><span style="color:#24292E">, </span><span style="color:#032F62">'Edit'</span><span style="color:#24292E">, </span><span style="color:#032F62">'Grep'</span><span style="color:#24292E">, </span><span style="color:#032F62">'Bash'</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">  workspace_bind: { mode: </span><span style="color:#032F62">'local_mount'</span><span style="color:#24292E">, path: </span><span style="color:#032F62">'/abs/workspace'</span><span style="color:#24292E"> },</span></span>
+<span class="line"><span style="color:#24292E">  workspace_binding: </span><span style="color:#032F62">'ws-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">})) </span><span style="color:#D73A49">as</span><span style="color:#24292E"> { </span><span style="color:#E36209">generation</span><span style="color:#D73A49">:</span><span style="color:#005CC5"> number</span><span style="color:#24292E"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 产品会话拨的是 Runtime 给出的会话端点，不是控制面方法</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.session.</span><span style="color:#6F42C1">deactivate</span><span style="color:#24292E">({ task_id: </span><span style="color:#032F62">'task-1'</span><span style="color:#24292E">, generation });</span></span></code></pre></div>
+<p>关掉会话之后，同一 <code>generation</code> 再 <code>host_call</code> 必须失败关闭。这是合同，不是「尽量」。</p>
+<p>需要换 harness 而不拆产品任务时，走 <code>handoff_prepare</code> → <code>handoff_commit</code>（或 <code>handoff_abort</code>）。冲突码见 API 页的 <code>handoff_*</code>。</p>
+<p>---</p>
+<h2 id="宿主工具先授权再代发">宿主工具：先授权，再代发</h2>
+<p>平面 A 的入口是 <code>host_tools/prepare</code>。没有 grant，就不要假装工具可用。</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/host-tools.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { KrunClient, PERMISSION_NEQ_SCOPE } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> client</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> KrunClient.</span><span style="color:#6F42C1">fromEnv</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.hostTools.</span><span style="color:#6F42C1">prepare</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  task_id: </span><span style="color:#032F62">'task-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  runtime_generation: generation,</span></span>
+<span class="line"><span style="color:#24292E">  workspace_binding: </span><span style="color:#032F62">'ws-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  expires_at_ms: Date.</span><span style="color:#6F42C1">now</span><span style="color:#24292E">() </span><span style="color:#D73A49">+</span><span style="color:#005CC5"> 30</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 60_000</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#6A737D">  // tools_admitted: ['Read', 'Bash'], // permission only — ≠ path scope</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">void</span><span style="color:#005CC5"> PERMISSION_NEQ_SCOPE</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 无 helper：代发 / 取消</span></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span><span style="color:#032F62">'host_call'</span><span style="color:#24292E">, {</span></span>
+<span class="line"><span style="color:#24292E">  task_id: </span><span style="color:#032F62">'task-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  generation,</span></span>
+<span class="line"><span style="color:#24292E">  call_id: </span><span style="color:#032F62">'w-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  name: </span><span style="color:#032F62">'Write'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  arguments: { file_path: </span><span style="color:#032F62">'out.txt'</span><span style="color:#24292E">, content: </span><span style="color:#032F62">'ok</span><span style="color:#005CC5">\n</span><span style="color:#032F62">'</span><span style="color:#24292E"> },</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">try</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  await</span><span style="color:#24292E"> client.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span><span style="color:#032F62">'host_cancel'</span><span style="color:#24292E">, {</span></span>
+<span class="line"><span style="color:#24292E">    task_id: </span><span style="color:#032F62">'task-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    generation,</span></span>
+<span class="line"><span style="color:#24292E">    call_id: </span><span style="color:#032F62">'w-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    name: </span><span style="color:#032F62">'Write'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    arguments: { file_path: </span><span style="color:#032F62">'out.txt'</span><span style="color:#24292E">, content: </span><span style="color:#032F62">'ok</span><span style="color:#005CC5">\n</span><span style="color:#032F62">'</span><span style="color:#24292E"> },</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"><span style="color:#24292E">} </span><span style="color:#D73A49">catch</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6A737D">  // 取消成功只表示控制面不再认这笔调用；远端进程未必已死</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+<p>只要 generation 变了，旧 grant 作废。凭据平面和工具根（<code>setRoots</code>）不是一回事。</p>
+<p><code>host_endpoint</code> 只给 Main 拿拨号信息，别泄漏。</p>
+<p>---</p>
+<h2 id="工作区共享与资源旋钮">工作区共享与资源旋钮</h2>
+<p>共享：<strong>参数里禁止 <code>host_path</code></strong>。业务侧只看见带 <code>share_id</code> 的稳定 guest 路径。</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/shares.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { KrunClient } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> client</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> KrunClient.</span><span style="color:#6F42C1">fromEnv</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.guestShares.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">({ name: </span><span style="color:#032F62">'vm-main'</span><span style="color:#24292E">, share_id: </span><span style="color:#032F62">'workspace'</span><span style="color:#24292E"> });</span></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.guestShares.</span><span style="color:#6F42C1">list</span><span style="color:#24292E">({ name: </span><span style="color:#032F62">'vm-main'</span><span style="color:#24292E"> });</span></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.guestShares.</span><span style="color:#6F42C1">remove</span><span style="color:#24292E">({ name: </span><span style="color:#032F62">'vm-main'</span><span style="color:#24292E">, share_id: </span><span style="color:#032F62">'workspace'</span><span style="color:#24292E"> });</span></span></code></pre></div>
+<p>资源：<code>set</code> / <code>adjust</code> 只改 <strong>desired</strong>。看到 <code>needs_restart</code> 再 <code>recreate</code>，不要在文档或 UI 里写成「已经热扩容」。</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/resources.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { KrunClient } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> client</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> KrunClient.</span><span style="color:#6F42C1">fromEnv</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.vmResources.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  cpus: </span><span style="color:#005CC5">4</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  memory_mib: </span><span style="color:#005CC5">4096</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  disk_mib: </span><span style="color:#005CC5">20480</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  profile: </span><span style="color:#032F62">'manual'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  name: </span><span style="color:#032F62">'vm-main'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> st</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> (</span><span style="color:#D73A49">await</span><span style="color:#24292E"> client.vmResources.</span><span style="color:#6F42C1">status</span><span style="color:#24292E">({ name: </span><span style="color:#032F62">'vm-main'</span><span style="color:#24292E"> })) </span><span style="color:#D73A49">as</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#E36209">  apply_state</span><span style="color:#D73A49">?:</span><span style="color:#005CC5"> string</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">};</span></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> (st.apply_state </span><span style="color:#D73A49">===</span><span style="color:#032F62"> 'needs_restart'</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  await</span><span style="color:#24292E"> client.vmResources.</span><span style="color:#6F42C1">recreate</span><span style="color:#24292E">({ name: </span><span style="color:#032F62">'vm-main'</span><span style="color:#24292E"> });</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+<p>Core 实现选择同理：<code>coreImpl.set({ impl: 'default' })</code>；未知 id 失败关闭。切实现后旧 host_tools lease 不能继续用。</p>
+<p>---</p>
+<h2 id="较少用到的面">较少用到的面</h2>
+<p>这些不是主路径。用之前先确认产品真的需要。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>任务</th><th>入口</th></tr></thead><tbody>
+<tr><td>能力租约</td><td><code>capabilities/open</code> → <code>call</code> / <code>execute</code> → <code>close</code>（<code>client.call</code>）</td></tr>
+<tr><td>目录授权</td><td>`directories/grant\</td><td>update\</td><td>revoke\</td><td>list`</td></tr>
+<tr><td>清孤儿 / 卸 pin</td><td><code>reclaim_orphans</code>、<code>reclaim_pin</code>、<code>uninstall_pin</code>、<code>gc_pins</code></td></tr>
+<tr><td>出站 Authz</td><td><code>egress/status</code> · <code>egress/admit</code> · <code>egress/revoke</code>（<code>client.call</code>；<code>EGRESS_CLAIMED_DEFAULT === false</code>）</td></tr>
+<tr><td>生命周期观测</td><td><code>client.lifecycle.events({ since_seq })</code></td></tr>
+<tr><td>读合同</td><td><code>loadContract</code> / <code>loadHostCapabilityScopes</code> / <code>loadHostCaps*</code></td></tr>
+</tbody></table></div>
+<p><code>capabilities/*</code> 执行期可能冒出内部 <code>provider/call</code>——那是回调，不是产品 API。</p>
+<p>出站：admit 本身不开网。不要把「控制面调通」写成「出站已合格」。</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/egress-lifecycle.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  KrunClient,</span></span>
+<span class="line"><span style="color:#24292E">  EGRESS_CLAIMED_DEFAULT,</span></span>
+<span class="line"><span style="color:#D73A49">  type</span><span style="color:#24292E"> EgressAdmitRef,</span></span>
+<span class="line"><span style="color:#24292E">} </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> client</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> KrunClient.</span><span style="color:#6F42C1">fromEnv</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">void</span><span style="color:#005CC5"> EGRESS_CLAIMED_DEFAULT</span><span style="color:#24292E">; </span><span style="color:#6A737D">// false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span><span style="color:#032F62">'egress/status'</span><span style="color:#24292E">, {});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> ref</span><span style="color:#D73A49">:</span><span style="color:#6F42C1"> EgressAdmitRef</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  scope: </span><span style="color:#032F62">'tools_mediated'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  task_id: </span><span style="color:#032F62">'task-1'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  generation,</span></span>
+<span class="line"><span style="color:#24292E">};</span></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span><span style="color:#032F62">'egress/admit'</span><span style="color:#24292E">, { </span><span style="color:#D73A49">...</span><span style="color:#24292E">ref });</span></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> client.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span><span style="color:#032F62">'egress/revoke'</span><span style="color:#24292E">, { </span><span style="color:#D73A49">...</span><span style="color:#24292E">ref });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> since </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> page</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#24292E"> client.lifecycle.</span><span style="color:#6F42C1">events</span><span style="color:#24292E">({ since_seq: since });</span></span>
+<span class="line"><span style="color:#D73A49">for</span><span style="color:#24292E"> (</span><span style="color:#D73A49">const</span><span style="color:#005CC5"> ev</span><span style="color:#D73A49"> of</span><span style="color:#24292E"> page.events </span><span style="color:#D73A49">as</span><span style="color:#24292E"> { </span><span style="color:#E36209">seq</span><span style="color:#D73A49">:</span><span style="color:#005CC5"> number</span><span style="color:#24292E"> }[]) {</span></span>
+<span class="line"><span style="color:#24292E">  since </span><span style="color:#D73A49">=</span><span style="color:#24292E"> Math.</span><span style="color:#6F42C1">max</span><span style="color:#24292E">(since, ev.seq);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+<p>---</p>
+<h2 id="出错时怎么分支">出错时怎么分支</h2>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/errors.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { isKrunControlError } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">try</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6A737D">  /* await client.… */</span></span>
+<span class="line"><span style="color:#24292E">} </span><span style="color:#D73A49">catch</span><span style="color:#24292E"> (e) {</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#6F42C1">isKrunControlError</span><span style="color:#24292E">(e)) </span><span style="color:#D73A49">throw</span><span style="color:#24292E"> e;</span></span>
+<span class="line"><span style="color:#D73A49">  switch</span><span style="color:#24292E"> (e.code) {</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'missing_endpoint'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'transport'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'timeout'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#6A737D">      // 控制面没起来或断了</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'invalid_package'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'pin_mismatch'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'acp_negotiate_failed'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#6A737D">      // 包装 / 协商</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'handoff_conflict'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'handoff_failed'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#6A737D">      // 热切换</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'fail_closed'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'session_revoked'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#032F62"> 'unauthorized'</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#6A737D">      // 拒写、撤权</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">    default</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#6A737D">      // 映射成产品侧失败态；别把内部 code 原文甩给终端用户</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre></div>
+<p>---</p>
+<h2 id="方法速查跳转到-api">方法速查（跳转到 API）</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>方法族</th><th>SDK</th></tr></thead><tbody>
+<tr><td><code>doctor</code></td><td><code>client.doctor()</code></td></tr>
+<tr><td><code>validate</code> / <code>list</code></td><td><code>client.call</code></td></tr>
+<tr><td><code>activate</code> / <code>deactivate</code> / <code>handoff_*</code></td><td><code>client.session.*</code></td></tr>
+<tr><td><code>host_tools/prepare</code> · <code>discard</code></td><td><code>client.hostTools.*</code></td></tr>
+<tr><td><code>host_call</code> / <code>host_cancel</code> / <code>host_endpoint</code></td><td><code>client.call</code></td></tr>
+<tr><td><code>egress/*</code></td><td><code>client.call</code></td></tr>
+<tr><td><code>lifecycle/events</code></td><td><code>client.lifecycle.events</code></td></tr>
+<tr><td><code>guest_shares/*</code></td><td><code>client.guestShares.*</code></td></tr>
+<tr><td><code>vm_resources/*</code></td><td><code>client.vmResources.*</code></td></tr>
+<tr><td><code>core_impl/*</code></td><td><code>client.coreImpl.*</code></td></tr>
+<tr><td><code>capabilities/*</code> / <code>directories/*</code> / 回收</td><td><code>client.call</code></td></tr>
+</tbody></table></div>
+<p>字段与错误码：<a href="../api/index.html">控制面 API</a>。</p>
+<h2 id="相关">相关</h2>
+<ul>
+<li><a href="../integration/index.html">接入 Main</a>  </li>
+<li><a href="../api/index.html">控制面 API</a>  </li>
+<li><a href="../operations/index.html">发版检查</a>  </li>
+</ul>
+      </article>
+      <nav class="page-navigation" aria-label="相邻章节">
+    <a href="../dock-delta/index.html"><span>上一篇</span><strong>迁出本机旁路</strong></a>
+    <a href="../api/index.html"><span>下一篇</span><strong>控制面 API</strong></a>
+  </nav>
+      <footer class="docs-footer">
+        <span>Kense KRun · v1.0.0</span>
+        <span>文档</span>
+      </footer>
+    </main>
+    <aside class="docs-toc" aria-label="本页目录">
+      <div class="toc-content">
+        <p class="nav-label">本页</p>
+        <nav><a href="#先分清两件事">先分清两件事</a>
+<a href="#起控制面并确认活着">起控制面并确认活着</a>
+<a href="#装包-开会话-收会话">装包 → 开会话 → 收会话</a>
+<a href="#宿主工具先授权再代发">宿主工具：先授权，再代发</a>
+<a href="#工作区共享与资源旋钮">工作区共享与资源旋钮</a>
+<a href="#较少用到的面">较少用到的面</a>
+<a href="#出错时怎么分支">出错时怎么分支</a>
+<a href="#方法速查跳转到-api">方法速查（跳转到 API）</a>
+<a href="#相关">相关</a></nav>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1 分钟对接 · KRun 1.0.0</title>
+  <meta name="description" content="装包、起控制面、doctor 通——先跑通再展开。" />
+  <meta name="doc-version" content="1.0.0" />
+  <meta name="doc-product" content="krun" />
+  <meta name="doc-audience" content="web-main" />
+  
+  <link rel="icon" href="../../../assets/kense-icon.png" />
+  <link rel="stylesheet" href="../../../assets/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+  <header class="docs-header">
+    <a class="docs-brand" href="../../../index.html">
+      <img class="brand-logo" src="../../../assets/kense-mark.png" width="28" height="28" alt="Kense" />
+      <span>Kense</span>
+      <span class="header-divider">/</span>
+      <span class="docs-wordmark">KRun</span>
+    </a>
+    <nav class="header-links" aria-label="站点">
+      <a href="../index/index.html">文档</a>
+      <a class="download-link" href="../../../../INSTALL.md">对接</a>
+    </nav>
+  </header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" aria-label="章节">
+      <div class="sidebar-heading">
+        <img class="sidebar-logo" src="../../../assets/kense-mark.png" width="22" height="22" alt="" />
+        <div>
+          <strong>KRun</strong>
+          <span>隔离运行时</span>
+        </div>
+      </div>
+      <div class="docs-switchers"><details class="docs-switcher">
+  <summary><span class="switcher-label">Version</span><span class="switcher-current">1.0.0</span><span class="switcher-chevron" aria-hidden="true"></span></summary>
+  <div class="switcher-menu"><a href="../../1.0.0/index/index.html" aria-current="page">1.0.0 <small>默认</small></a></div>
+</details></div>
+      <nav class="chapter-nav" aria-label="文档目录">
+        <p class="nav-label">v1.0.0</p>
+        <div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="#" aria-current="page"><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div>
+      </nav>
+      <div class="docs-version"><span class="version-dot"></span> v1.0.0 · 默认</div>
+    </aside>
+    <main id="content">
+      <details class="mobile-navigation">
+        <summary>章节导航</summary>
+        <nav><div class="nav-group"><p class="nav-group-label">入门</p><a class="nav-home" href="#" aria-current="page"><span class="nav-number">01</span>1 分钟对接</a>
+<a class="" href="../integration/index.html" ><span class="nav-number">02</span>接入 Main</a>
+<a class="" href="../boundaries/index.html" ><span class="nav-number">03</span>边界与分工</a>
+<a class="" href="../dock-delta/index.html" ><span class="nav-number">04</span>迁出本机旁路</a></div>
+<div class="nav-group"><p class="nav-group-label">实现</p><a class="" href="../recipes/index.html" ><span class="nav-number">05</span>调用配方</a>
+<a class="" href="../api/index.html" ><span class="nav-number">06</span>控制面 API</a></div>
+<div class="nav-group"><p class="nav-group-label">发版</p><a class="" href="../operations/index.html" ><span class="nav-number">07</span>发版检查</a></div></nav>
+      </details>
+      <nav class="breadcrumb" aria-label="面包屑">
+        <a href="../../../index.html">文档</a><span>/</span>
+        <a href="../../index.html">KRun</a><span>/</span>
+        <span>v1.0.0</span><span>/</span>
+        <span>1 分钟对接</span>
+      </nav>
+      <header class="article-heading">
+        <p class="eyebrow">1 分钟对接</p>
+        <h1>1 分钟对接</h1>
+        <p class="article-description">装包、起控制面、doctor 通——先跑通再展开。</p>
+        <div class="article-meta">
+          <span>更新 2026-11-14</span>
+          <span>文档版本 1.0.0</span>
+          <span>默认</span>
+        </div>
+      </header>
+      <article class="prose">
+<p>约一分钟：装上 <code>@kense/krun</code>，起控制面，看到 <code>doctor</code> 成功。先通再深挖。</p>
+<h2 id="装包">装包</h2>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">install.sh</span><span class="code-meta">bash</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#6F42C1">pnpm</span><span style="color:#032F62"> add</span><span style="color:#032F62"> @kense/krun</span></span></code></pre></div>
+<p>有平台 optional 包更好（如 <code>@kense/krun-darwin-arm64</code>）。没有时设 <code>KRUN_BIN</code> 指向本机 <code>krun</code> 即可。</p>
+<h2 id="跑通">跑通</h2>
+<p>准备两个环境变量，然后复制下面这段（Main 进程里）：</p>
+<div class="table-scroll"><table>
+<thead><tr><th>变量</th><th>作用</th></tr></thead><tbody>
+<tr><td><code>KRUN_CONTROL_SOCK</code></td><td>控制面端点路径</td></tr>
+<tr><td><code>KRUN_DATA_DIR</code></td><td>数据目录</td></tr>
+</tbody></table></div>
+<div class="code-block"><div class="code-toolbar"><span class="code-path">main/quickstart.ts</span><span class="code-meta">typescript</span></div><pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  resolveKrunBinary,</span></span>
+<span class="line"><span style="color:#24292E">  spawnKrunServe,</span></span>
+<span class="line"><span style="color:#24292E">  KrunClient,</span></span>
+<span class="line"><span style="color:#24292E">  CONTROL_ENDPOINT_ENV,</span></span>
+<span class="line"><span style="color:#24292E">} </span><span style="color:#D73A49">from</span><span style="color:#032F62"> '@kense/krun'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> bin</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> resolveKrunBinary</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">bin) </span><span style="color:#D73A49">throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span><span style="color:#032F62">'krun binary missing — install platform package or set KRUN_BIN'</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> dataDir</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> process.env.</span><span style="color:#005CC5">KRUN_DATA_DIR</span><span style="color:#D73A49">!</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> endpoint</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> process.env[</span><span style="color:#005CC5">CONTROL_ENDPOINT_ENV</span><span style="color:#24292E">]</span><span style="color:#D73A49">!</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">spawnKrunServe</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  bin,</span></span>
+<span class="line"><span style="color:#24292E">  dataDir,</span></span>
+<span class="line"><span style="color:#24292E">  env: {</span></span>
+<span class="line"><span style="color:#24292E">    [</span><span style="color:#005CC5">CONTROL_ENDPOINT_ENV</span><span style="color:#24292E">]: endpoint,</span></span>
+<span class="line"><span style="color:#24292E">    KRUN_DATA_DIR: dataDir,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">async</span><span style="color:#D73A49"> function</span><span style="color:#6F42C1"> ready</span><span style="color:#24292E">(</span><span style="color:#E36209">ms</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> 15_000</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> until</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Date.</span><span style="color:#6F42C1">now</span><span style="color:#24292E">() </span><span style="color:#D73A49">+</span><span style="color:#24292E"> ms;</span></span>
+<span class="line"><span style="color:#D73A49">  for</span><span style="color:#24292E"> (;;) {</span></span>
+<span class="line"><span style="color:#D73A49">    try</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">      return</span><span style="color:#D73A49"> await</span><span style="color:#24292E"> KrunClient.</span><span style="color:#6F42C1">fromEnv</span><span style="color:#24292E">().</span><span style="color:#6F42C1">doctor</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">    } </span><span style="color:#D73A49">catch</span><span style="color:#24292E"> (err) {</span></span>
+<span class="line"><span style="color:#D73A49">      if</span><span style="color:#24292E"> (Date.</span><span style="color:#6F42C1">now</span><span style="color:#24292E">() </span><span style="color:#D73A49">></span><span style="color:#24292E"> until) </span><span style="color:#D73A49">throw</span><span style="color:#24292E"> err;</span></span>
+<span class="line"><span style="color:#D73A49">      await</span><span style="color:#D73A49"> new</span><span style="color:#005CC5"> Promise</span><span style="color:#24292E">((</span><span style="color:#E36209">r</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#6F42C1"> setTimeout</span><span style="color:#24292E">(r, </span><span style="color:#005CC5">50</span><span style="color:#24292E">));</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> health</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> ready</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(</span><span style="color:#032F62">'KRun is up'</span><span style="color:#24292E">, health);</span></span></code></pre></div>
+<p><code>spawnKrunServe</code> 不会替你等就绪——上面的 <code>ready()</code> 会轮询 <code>doctor</code>。</p>
+<h2 id="你已接通">你已接通</h2>
+<ol>
+<li>包已安装，<code>resolveKrunBinary()</code> 能解析到二进制。  </li>
+<li><code>doctor</code> 在超时内返回成功。  </li>
+</ol>
+<p>到这里，控制面已经活了。会话、工具、挂载都是下一步，不是这一分钟的拦路石。</p>
+<h2 id="接下来">接下来</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>你要做的事</th><th>打开</th></tr></thead><tbody>
+<tr><td>放置、最小会话、可选能力</td><td><a href="../integration/index.html">接入 Main</a></td></tr>
+<tr><td>按任务抄调用顺序</td><td><a href="../recipes/index.html">调用配方</a></td></tr>
+<tr><td>查参数与错误码</td><td><a href="../api/index.html">控制面 API</a></td></tr>
+<tr><td>从本机旁路切到隔离</td><td><a href="../dock-delta/index.html">迁出本机旁路</a></td></tr>
+<tr><td>谁在哪一层对接（跑通后再读）</td><td><a href="../boundaries/index.html">边界与分工</a></td></tr>
+<tr><td>出门前核对</td><td><a href="../operations/index.html">发版检查</a></td></tr>
+</tbody></table></div>
+<div class="chapter-cards"><a href="../integration/index.html"><span class="step-number">01</span><strong>接入 Main</strong><span>装包、起控制面、放置、跑通会话</span><span class="chapter-arrow">→</span></a><a href="../boundaries/index.html"><span class="step-number">02</span><strong>边界与分工</strong><span>谁调 Runtime、谁不调、术语从哪来（跑通后再读）</span><span class="chapter-arrow">→</span></a><a href="../dock-delta/index.html"><span class="step-number">03</span><strong>迁出本机旁路</strong><span>从宿主直跑切到隔离运行时</span><span class="chapter-arrow">→</span></a><a href="../recipes/index.html"><span class="step-number">04</span><strong>调用配方</strong><span>按任务写好的 Main 调用路径，附可运行片段</span><span class="chapter-arrow">→</span></a><a href="../api/index.html"><span class="step-number">05</span><strong>控制面 API</strong><span>方法、参数、错误码与状态面</span><span class="chapter-arrow">→</span></a><a href="../operations/index.html"><span class="step-number">06</span><strong>发版检查</strong><span>可见范围、版本钉扎、出门清单</span><span class="chapter-arrow">→</span></a></div>
+<p>本页给 Web <strong>Main</strong> 用。界面不要直接装这个包——细节在边界页。</p>
+      </article>
+      <nav class="page-navigation" aria-label="相邻章节">
+    <a href="../../../index.html"><span>目录</span><strong>文档入口</strong></a>
+    <a href="../integration/index.html"><span>下一篇</span><strong>接入 Main</strong></a>
+  </nav>
+      <footer class="docs-footer">
+        <span>Kense KRun · v1.0.0</span>
+        <span>文档</span>
+      </footer>
+    </main>
+    <aside class="docs-toc" aria-label="本页目录">
+      <div class="toc-content">
+        <p class="nav-label">本页</p>
+        <nav><a href="#装包">装包</a>
+<a href="#跑通">跑通</a>
+<a href="#你已接通">你已接通</a>
+<a href="#接下来">接下来</a></nav>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>
